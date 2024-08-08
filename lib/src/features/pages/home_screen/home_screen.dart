@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _loadEmployee();
-    SocketService.initSocket();
+    socketService.initSocket();
   }
 
   void _loadEmployee() async {

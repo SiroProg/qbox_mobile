@@ -5,7 +5,7 @@ import 'db_service/db_service.dart';
 class SocketService {
   static late IO.Socket socket;
 
-  static void initSocket() {
+  void initSocket() {
     socket = IO.io('https://inqbox.q19.kz/operator', {
       'transports': ['websocket'],
       'query': {
@@ -29,11 +29,14 @@ class SocketService {
     socket.connect();
   }
 
-  static void startOperatorStatus() {
+   void startOperatorStatus() {
     socket.emit('operator_status', {'status': 'available', 'connect': true});
   }
 
-  static void updateOperatorStatus(String status) {
+   void updateOperatorStatus(String status) {
     socket.emit("operator_status", {'status': status});
   }
 }
+
+
+SocketService socketService = SocketService();

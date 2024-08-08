@@ -30,7 +30,7 @@ class _VideoScreenState extends State<VideoScreen> {
   void loadStatuses() async {
     final panelProvider = Provider.of<ControlPanelProvider>(context);
     statuses = await ControlPanelService().fetchOperatorStatuses();
-    SocketService.startOperatorStatus();
+    socketService.startOperatorStatus();
     panelProvider.performance = await ControlPanelService().fetchOperatorPerformance();
     panelProvider.conversations =
         await ControlPanelService().fetchConversations(page: 1, limit: 10);

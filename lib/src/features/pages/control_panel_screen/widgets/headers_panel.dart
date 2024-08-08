@@ -105,7 +105,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                                       panelProvider.changeStatus(status);
                                       panelProvider.startStopwatch();
 
-                                      SocketService.updateOperatorStatus(
+                                      socketService.updateOperatorStatus(
                                           status.key);
                                     }
 
