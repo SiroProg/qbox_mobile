@@ -1,7 +1,6 @@
 import 'package:qbox_mobile/src/features/services/operator_call_service/operator_api_service.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/call_user_model.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/upload_model.dart';
-import 'package:qbox_mobile/src/features/pages/operator_screen/operator_call_screen.dart';
 import 'package:qbox_mobile/src/features/pages/operator_screen/widget/call_screen.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/chat.dart';
 import 'package:qbox_mobile/src/features/services/db_service/db_service.dart';
@@ -281,16 +280,16 @@ class ChatProvider extends ChangeNotifier {
 
             _assetsAudioPlayer.stop();
 
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const OperatorCallScreen(),
-              ),
-            );
+          //   Navigator.pushReplacement(
+          //     context,
+          //     MaterialPageRoute(
+          //       // builder: (context) => const OperatorCallScreen(),
+          //     // ),
+          //   // );
           },
           onCancel: () {
             socketService.socket.emit("operator_reject");
-            socketService.socket.emit("operator_cancel");
+            // socketService.socket.emit("operator_cancel");
 
             _assetsAudioPlayer.stop();
             Navigator.pop(context);

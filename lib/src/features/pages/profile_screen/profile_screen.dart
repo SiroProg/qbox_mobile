@@ -74,7 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       body: isLoading
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : SizedBox(
               width: double.infinity,
               height: double.infinity,

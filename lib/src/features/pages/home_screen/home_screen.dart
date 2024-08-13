@@ -110,19 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
             CupertinoButton(
-              onPressed: () {
-                DBService.token = 'b72e2d8666d64bc188b65ab53ec7e5a3';
-              },
-              color: AppColors.white,
-              child: const Text(
-                "New token",
-                style: TextStyle(
-                  color: AppColors.black,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            CupertinoButton(
               color: AppColors.white,
               onPressed: () {
                 Navigator.push(
