@@ -10,6 +10,6 @@ class ProfileProjects extends StatefulWidget {
 class _ProfileProjectsState extends State<ProfileProjects> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

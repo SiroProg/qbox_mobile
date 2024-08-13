@@ -30,7 +30,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
         surfaceTintColor: AppColors.white,
         backgroundColor: AppColors.white,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Профиль",
           style: TextStyle(
             color: AppColors.black,
@@ -50,7 +50,7 @@ class _ProfileDetailState extends State<ProfileDetail> {
                 ProfileHeaderWidget(
                   employee: widget.employee,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(

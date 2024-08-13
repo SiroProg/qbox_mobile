@@ -36,6 +36,13 @@ class _BodyPageviewPanelState extends State<BodyPageviewPanel> {
                       panelProvider.initialButtonIndex = 0;
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.white,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: AppColors.green, width: 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -48,16 +55,9 @@ class _BodyPageviewPanelState extends State<BodyPageviewPanel> {
                         Text(
                           'Звонков: ${panelProvider.conversations.length}',
                           style:
-                              TextStyle(color: AppColors.black10, fontSize: 14),
+                              const TextStyle(color: AppColors.black10, fontSize: 14),
                         ),
                       ],
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.white,
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: AppColors.green, width: 1),
-                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
                 ),
@@ -73,6 +73,13 @@ class _BodyPageviewPanelState extends State<BodyPageviewPanel> {
                       panelProvider.initialButtonIndex = 1;
                     }
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.white,
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: AppColors.red, width: 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -83,16 +90,9 @@ class _BodyPageviewPanelState extends State<BodyPageviewPanel> {
                       Text(
                         'Звонков: ${panelProvider.missedCalls.length}',
                         style:
-                            TextStyle(color: AppColors.black10, fontSize: 14),
+                            const TextStyle(color: AppColors.black10, fontSize: 14),
                       ),
                     ],
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.white,
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(color: AppColors.red, width: 1),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
                   ),
                 ),
               ),
@@ -107,20 +107,6 @@ class _BodyPageviewPanelState extends State<BodyPageviewPanel> {
                       panelProvider.initialButtonIndex = 2;
                     }
                   },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Созданные задачи',
-                        style: TextStyle(color: AppColors.black, fontSize: 16),
-                      ),
-                      const Text(
-                        'Звонков: 0',
-                        style:
-                            TextStyle(color: AppColors.black10, fontSize: 14),
-                      ),
-                    ],
-                  ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.white,
                     shape: RoundedRectangleBorder(
@@ -128,6 +114,20 @@ class _BodyPageviewPanelState extends State<BodyPageviewPanel> {
                           const BorderSide(color: AppColors.black10, width: 1),
                       borderRadius: BorderRadius.circular(10),
                     ),
+                  ),
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Созданные задачи',
+                        style: TextStyle(color: AppColors.black, fontSize: 16),
+                      ),
+                      Text(
+                        'Звонков: 0',
+                        style:
+                            TextStyle(color: AppColors.black10, fontSize: 14),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -139,10 +139,10 @@ class _BodyPageviewPanelState extends State<BodyPageviewPanel> {
           child: PageView(
             controller: panelProvider.pageController,
             physics: const NeverScrollableScrollPhysics(),
-            children: [
-              const IncomingCallsPanel(),
-              const MissedCallsPanel(),
-              const CreatedTasksPanel(),
+            children: const [
+              IncomingCallsPanel(),
+              MissedCallsPanel(),
+              CreatedTasksPanel(),
             ],
           ),
         ),
@@ -176,14 +176,14 @@ class IncomingCallsPanel extends StatelessWidget {
                       Text(
                         panelProvider.getFormattedDateTime(
                             panelProvider.conversations[index].startedAt),
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: AppColors.black10,
                           fontSize: 14,
                         ),
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             'Неизвестный клиент',
                             style: TextStyle(
                               color: AppColors.black,
@@ -191,7 +191,7 @@ class IncomingCallsPanel extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 10),
-                          Icon(
+                          const Icon(
                             CupertinoIcons.star_fill,
                             color: AppColors.orange,
                             size: 18,
@@ -200,7 +200,7 @@ class IncomingCallsPanel extends StatelessWidget {
                           Text(
                             panelProvider.conversations[index].feedback.rating
                                 .toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: AppColors.black,
                               fontSize: 15,
                             ),
@@ -210,22 +210,22 @@ class IncomingCallsPanel extends StatelessWidget {
                       const SizedBox(height: 5),
                       Row(
                         children: [
-                          Icon(
+                          const Icon(
                             CupertinoIcons.phone_arrow_down_left,
                             color: AppColors.green,
                           ),
                           const SizedBox(width: 10),
-                          Text(
+                          const Text(
                             'Принято',
                             style: TextStyle(
                               color: AppColors.black10,
                               fontSize: 14,
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Text(
                             panelProvider.getFormattedDateTime(panelProvider.conversations[index].duration, 'mm:ss'),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: AppColors.black10,
                               fontSize: 14,
                             ),
@@ -268,12 +268,12 @@ class MissedCallsPanel extends StatelessWidget {
                     Text(
                       panelProvider.getFormattedDateTime(
                           panelProvider.missedCalls[index].queuedAt),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: AppColors.black10,
                         fontSize: 14,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Неизвестный клиент',
                       style: TextStyle(
                         color: AppColors.black,
@@ -283,22 +283,22 @@ class MissedCallsPanel extends StatelessWidget {
                     const SizedBox(height: 5),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           CupertinoIcons.phone_arrow_up_right,
                           color: AppColors.red,
                         ),
                         const SizedBox(width: 10),
-                        Text(
+                        const Text(
                           'Пропущен',
                           style: TextStyle(
                             color: AppColors.black10,
                             fontSize: 14,
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Text(
                           panelProvider.getFormattedDateTime(panelProvider.missedCalls[index].waitTime, 'mm:ss'),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppColors.black10,
                             fontSize: 14,
                           ),
@@ -321,7 +321,7 @@ class CreatedTasksPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text('CreatedTasksPanel'),
     );
   }

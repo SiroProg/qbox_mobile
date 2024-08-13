@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
+import 'package:qbox_mobile/src/features/providers/employees_provider.dart';
 
 import '../../features/pages/authentication_screen/authentication_page.dart';
 import '../../features/providers/auth_provider.dart';
@@ -17,9 +19,10 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ProfileProvider()),
         ChangeNotifierProvider(create: (_) => ControlPanelProvider()),
+        ChangeNotifierProvider(create: (_) => EmployeesProvider()),
+        ChangeNotifierProvider(create: (_) => ChatProvider()),
       ],
       child: MaterialApp(
-
         debugShowCheckedModeBanner: false,
         title: 'Task 1',
         theme: ThemeData(

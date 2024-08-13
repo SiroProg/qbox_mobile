@@ -1,4 +1,3 @@
-// Модель статуса
 class Status {
   final int id;
   final String key;
@@ -18,7 +17,6 @@ class Status {
     this.icon,
   });
 
-// Десериализация
   factory Status.fromJson(Map<String, dynamic> json) {
     return Status(
       id: json['id'],
@@ -31,7 +29,6 @@ class Status {
     );
   }
 
-// Сериализация
   Map<String, dynamic> toJson() {
     return {
       'id': id,

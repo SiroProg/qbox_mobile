@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qbox_mobile/src/features/pages/employess/employees_screen.dart';
+import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
 import '../../../core/models/auth_models/employee_model.dart';
 import '../../../core/styles/app_colors.dart';
 import '../../providers/auth_provider.dart';
@@ -20,11 +22,23 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late Employee _employeeFuture;
 
+  bool _isSocketInitialized = false;
+
   @override
   void initState() {
     super.initState();
     _loadEmployee();
-    socketService.initSocket();
+
+    socketService.initSocket(context);
+    if (!_isSocketInitialized) {
+      socketService.initSocket(context);
+      _isSocketInitialized = true;
+    }
+
+    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+
+    chatProvider.initialize();
+    chatProvider.setBuildContext(context);
   }
 
   void _loadEmployee() async {
@@ -32,6 +46,12 @@ class _HomeScreenState extends State<HomeScreen> {
     HomeService apiService = HomeService();
     _employeeFuture = await apiService.fetchEmployee(token);
     DBService.id = _employeeFuture.id;
+  }
+
+  @override
+  void dispose() {
+    socketService.dispose();
+    super.dispose();
   }
 
   @override
@@ -96,6 +116,24 @@ class _HomeScreenState extends State<HomeScreen> {
               color: AppColors.white,
               child: const Text(
                 "New token",
+                style: TextStyle(
+                  color: AppColors.black,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            CupertinoButton(
+              color: AppColors.white,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => const EmployeesScreen(),
+                  ),
+                );
+              },
+              child: const Text(
+                'Employess',
                 style: TextStyle(
                   color: AppColors.black,
                 ),

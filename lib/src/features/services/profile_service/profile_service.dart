@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../core/constants/config.dart';
+import '../../../core/constants/api_constants.dart';
 import '../../../core/models/profile_models/calls_model.dart';
 import '../../../core/models/profile_models/employee_by_id_model.dart';
 import '../../../core/models/profile_models/log_model.dart';
@@ -11,7 +11,7 @@ import '../db_service/db_service.dart';
 class ProfileService {
   static final Dio _dio = Dio()
     ..options = BaseOptions(
-      baseUrl: Config.baseUrl,
+      baseUrl: ApiConstants.baseUrl,
       contentType: 'application/json',
       followRedirects: true,
       maxRedirects: 5,
@@ -36,7 +36,7 @@ class ProfileService {
       }
     } catch (e) {
       print('Error fetching audit data: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -74,7 +74,6 @@ class ProfileService {
     }
   }
 
-
   Future<List<SkillModel>> fetchEmployeeSkills(int employeeId) async {
     try {
       final response = await _dio
@@ -86,16 +85,17 @@ class ProfileService {
       if (response.statusCode == 200) {
         final skillsData = response.data['data']['skills'] as List;
         List<SkillModel> skills =
-        skillsData.map((data) => SkillModel.fromJson(data)).toList();
+            skillsData.map((data) => SkillModel.fromJson(data)).toList();
         return skills;
       } else {
         throw Exception('Failed to load employee skills');
       }
     } catch (e) {
       print('Error fetching employee skills: $e');
-      throw e;
+      rethrow;
     }
   }
+
   Future<CallsModel> fetchEmployeeCalls(int employeeId) async {
     try {
       final response = await _dio.get(
@@ -113,15 +113,14 @@ class ProfileService {
       }
     } catch (e) {
       print('Error fetching employee calls data: $e');
-      throw e;
+      rethrow;
     }
   }
-
 
   Future<PositionModel> fetchEmployeePosition(int id) async {
     try {
       final response =
-      await _dio.get('/api/staff/employees/$id/position', queryParameters: {
+          await _dio.get('/api/staff/employees/$id/position', queryParameters: {
         'Content-Type': 'application/json',
         'token': DBService.token,
       });
@@ -134,10 +133,9 @@ class ProfileService {
       }
     } catch (e) {
       print('Error fetching employee position: $e');
-      throw e;
+      rethrow;
     }
   }
-
 
   Future<EmployeeByIdModel> fetchEmployeeById(int id) async {
     try {
@@ -157,8 +155,7 @@ class ProfileService {
       }
     } catch (e) {
       print('Error: $e');
-      throw e;
+      rethrow;
     }
   }
-
 }

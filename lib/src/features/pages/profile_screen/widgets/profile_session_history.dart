@@ -10,6 +10,6 @@ class ProfileSessionHistory extends StatefulWidget {
 class _ProfileSessionHistoryState extends State<ProfileSessionHistory> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
-
 import '../../core/models/auth_models/employee_model.dart';
 import '../../core/models/control_panel_models/call_operator_model.dart';
 import '../../core/models/control_panel_models/call_team_model.dart';
@@ -16,7 +14,7 @@ class ControlPanelProvider extends ChangeNotifier {
   final PageController pageController = PageController();
   List<CallOperatorModel> callOperators = [];
   CallTeamModel callTeams = CallTeamModel(text: [], audio: [], video: []);
-   List<ConversationModel> conversations = [];
+  List<ConversationModel> conversations = [];
   List<Call> missedCalls = [];
 
   PerformanceModel? performance;
@@ -44,7 +42,7 @@ class ControlPanelProvider extends ChangeNotifier {
 
   void scrollToCenter(int index, BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final buttonWidth = 160.0;
+    const buttonWidth = 160.0;
     final targetPosition =
         index * (buttonWidth + 10) - screenWidth / 2 + buttonWidth / 2;
 
@@ -56,7 +54,7 @@ class ControlPanelProvider extends ChangeNotifier {
   }
 
   void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       elapsedTime = formatTime(stopwatch.elapsedMilliseconds);
       notifyListeners();
     });
@@ -101,10 +99,7 @@ class ControlPanelProvider extends ChangeNotifier {
       default:
         return '$day.$month.$year, $hour:$minute:$second';
     }
-    return '$day.$month.$year, $hour:$minute:$second';
   }
 
-  void changePage(int index) {
-    pageController.jumpToPage(index);
-  }
+  void changePage(int index) => pageController.jumpToPage(index);
 }

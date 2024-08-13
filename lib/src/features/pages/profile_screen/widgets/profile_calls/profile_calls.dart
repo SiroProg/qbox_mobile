@@ -27,7 +27,7 @@ class _ProfileCallsState extends State<ProfileCalls> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Тип звонка",
                 style: TextStyle(
                   color: AppColors.black,
@@ -35,14 +35,14 @@ class _ProfileCallsState extends State<ProfileCalls> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               SizedBox(
                 width: double.infinity,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
+                    borderRadius: const BorderRadius.all(
                       Radius.circular(10),
                     ),
                     border: Border.all(
@@ -67,10 +67,10 @@ class _ProfileCallsState extends State<ProfileCalls> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 "Очереди",
                 style: TextStyle(
                   color: AppColors.black,
@@ -78,7 +78,7 @@ class _ProfileCallsState extends State<ProfileCalls> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Wrap(
@@ -127,10 +127,10 @@ class CallTypeItem extends StatelessWidget {
           color: AppColors.black,
           size: 25,
         ),
-        SizedBox(width: 20),
+        const SizedBox(width: 20),
         Text(
           getCallType().$1,
-          style: TextStyle(
+          style: const TextStyle(
             color: AppColors.black,
             fontSize: 20,
             fontWeight: FontWeight.w400,

@@ -20,6 +20,8 @@ class SignUp extends StatelessWidget {
 class SignUpForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
+  SignUpForm({super.key});
+
   @override
   Widget build(BuildContext context) {
     final resetPasswordProvider = Provider.of<AuthProvider>(context);
@@ -55,7 +57,7 @@ class SignUpForm extends StatelessWidget {
                     resetPasswordProvider.updateEmail(value);
                     _formKey.currentState!.validate();
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     prefixIcon: Icon(
                       CupertinoIcons.person,
                       color: AppColors.black10,
@@ -66,7 +68,7 @@ class SignUpForm extends StatelessWidget {
                     enabledBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
-                    contentPadding: const EdgeInsets.all(10),
+                    contentPadding: EdgeInsets.all(10),
                   ),
                 ),
               ),

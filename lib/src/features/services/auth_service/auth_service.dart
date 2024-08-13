@@ -1,23 +1,22 @@
 import 'package:dio/dio.dart';
 
-import '../../../core/constants/config.dart';
+import '../../../core/constants/api_constants.dart';
 import '../../../core/utils/logger.dart';
 
-class AuthService{
+class AuthService {
   static final Dio _dio = Dio()
     ..options = BaseOptions(
-      baseUrl: Config.baseUrl,
+      baseUrl: ApiConstants.baseUrl,
       contentType: 'application/json',
       followRedirects: true,
       maxRedirects: 5,
     );
 
-
   static Future<String?> resetPassword(String login) async {
     try {
       final formData = FormData.fromMap({'login': login});
       Response response =
-      await _dio.post('/admin/login/restore/', data: formData);
+          await _dio.post('/admin/login/restore/', data: formData);
       if (!response.data['success']) {
         return response.data['reason'];
       } else {
@@ -28,7 +27,6 @@ class AuthService{
       return null;
     }
   }
-
 
   static Future<Map<String, dynamic>?> postLogin(
       String login, String password) async {

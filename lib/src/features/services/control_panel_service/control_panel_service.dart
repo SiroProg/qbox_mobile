@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../core/constants/config.dart';
+import '../../../core/constants/api_constants.dart';
 import '../../../core/models/control_panel_models/call_operator_model.dart';
 import '../../../core/models/control_panel_models/call_team_model.dart';
 import '../../../core/models/control_panel_models/missed_calls_model.dart';
@@ -12,7 +12,7 @@ import '../db_service/db_service.dart';
 class ControlPanelService {
   static final Dio _dio = Dio()
     ..options = BaseOptions(
-      baseUrl: Config.baseUrl,
+      baseUrl: ApiConstants.baseUrl,
       contentType: 'application/json',
       followRedirects: true,
       maxRedirects: 5,
@@ -34,7 +34,7 @@ class ControlPanelService {
       }
     } catch (e) {
       print('Error fetching call teams: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -58,7 +58,7 @@ class ControlPanelService {
       }
     } catch (e) {
       print('Error fetching operators: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -91,7 +91,7 @@ class ControlPanelService {
       }
     } catch (e) {
       print('Error fetching missed calls: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -126,7 +126,7 @@ class ControlPanelService {
       }
     } catch (e) {
       print('Error fetching conversations: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -144,7 +144,7 @@ class ControlPanelService {
       }
     } catch (e) {
       print('Error fetching operator performance: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -163,7 +163,7 @@ class ControlPanelService {
       }
     } catch (e) {
       print('Error fetching operator statuses: $e');
-      throw e;
+      rethrow;
     }
   }
 }

@@ -1,22 +1,21 @@
 import 'package:dio/dio.dart';
 
-import '../../../core/constants/config.dart';
+import '../../../core/constants/api_constants.dart';
 import '../../../core/models/auth_models/employee_model.dart';
 
-class HomeService{
+class HomeService {
   static final Dio _dio = Dio()
     ..options = BaseOptions(
-      baseUrl: Config.baseUrl,
+      baseUrl: ApiConstants.baseUrl,
       contentType: 'application/json',
       followRedirects: true,
       maxRedirects: 5,
     );
 
-
   Future<Employee> fetchEmployee(String token) async {
     try {
       final response =
-      await _dio.get('/api/staff/employees/me', queryParameters: {
+          await _dio.get('/api/staff/employees/me', queryParameters: {
         'Content-Type': 'application/json',
         'token': token,
       });
@@ -29,8 +28,7 @@ class HomeService{
       }
     } catch (e) {
       print('Error: $e');
-      throw e;
+      rethrow;
     }
   }
-
 }

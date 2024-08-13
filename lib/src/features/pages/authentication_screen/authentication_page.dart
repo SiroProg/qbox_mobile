@@ -27,7 +27,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       backgroundColor: AppColors.white,
       body: Stack(
         children: [
-          SizedBox(
+          const SizedBox(
             width: double.infinity,
             height: double.infinity,
             child: Image(
@@ -42,7 +42,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
               color: AppColors.black30.withOpacity(0.2),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -63,9 +63,9 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                   children: [
                     Text(
                       viewModel.selectedLanguage,
-                      style: TextStyle(color: AppColors.white),
+                      style: const TextStyle(color: AppColors.white),
                     ),
-                    Icon(Icons.arrow_drop_down, color: AppColors.white),
+                    const Icon(Icons.arrow_drop_down, color: AppColors.white),
                   ],
                 ),
                 initialValue: viewModel.selectedLanguage,

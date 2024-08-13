@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../core/constants/config.dart';
+import '../../../../../core/constants/api_constants.dart';
 import '../../../../../core/models/profile_models/log_model.dart';
 import '../../../../../core/styles/app_colors.dart';
 import '../../../../providers/profile_provider.dart';
@@ -121,7 +121,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 "Логи",
                 style: TextStyle(
                   color: AppColors.black,
@@ -134,7 +134,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
                 width: double.infinity,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
                     border: Border.all(color: AppColors.lightDark85, width: 1),
                   ),
                   child: Padding(
@@ -148,7 +148,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               "Дата",
                               style: TextStyle(
                                 color: AppColors.black10,
@@ -177,7 +177,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                 profileProvider.selectedDateFromLogs
                                     .toIso8601String()
                                     .substring(0, 10),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: AppColors.black10,
                                   fontSize: 18,
                                 ),
@@ -188,7 +188,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               "Действия",
                               style: TextStyle(
                                 color: AppColors.black10,
@@ -203,7 +203,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                 elevation: 0,
                               ),
                               onPressed: () => _showPopupMenu(context),
-                              child: Text(
+                              child: const Text(
                                 'Действия',
                                 style: TextStyle(
                                   color: AppColors.black10,
@@ -228,7 +228,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
                         width: double.infinity,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(10),
                             ),
                             border: Border.all(
@@ -251,7 +251,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                       height: 50,
                                       child: DecoratedBox(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
+                                          borderRadius: const BorderRadius.all(
                                             Radius.circular(100),
                                           ),
                                           color: AppColors.lightDark90,
@@ -265,7 +265,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                                   ? DecorationImage(
                                                       fit: BoxFit.cover,
                                                       image: NetworkImage(
-                                                        Config.baseUrl +
+                                                        ApiConstants.baseUrl +
                                                             _allLogs[value]
                                                                 .employee!
                                                                 .photo!,
@@ -285,7 +285,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                                       _allLogs[value]
                                                           .employee!
                                                           .lastName![0],
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     color: AppColors.black10,
                                                   ),
                                                 ),
@@ -298,7 +298,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                       children: [
                                         Text(
                                           "${_allLogs[value].employee?.firstName} ${_allLogs[value].employee?.lastName}",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: AppColors.black,
                                             fontSize: 18,
                                             fontWeight: FontWeight.w400,
@@ -306,18 +306,18 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                         ),
                                         Text(
                                           "@${_allLogs[value].employee?.username}",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: AppColors.black10,
                                             fontSize: 16,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     Text(
                                       profileProvider.formatUnixTimeToTime(
                                           _allLogs[value].createdAt!),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: AppColors.black10,
                                         fontSize: 16,
                                       ),
@@ -325,10 +325,12 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                   ],
                                 ),
                                 const SizedBox(height: 10),
-                                Text(
+                                const Text(
                                   "Вошел(-ла) в систему",
                                   style: TextStyle(
-                                      color: AppColors.black, fontSize: 18, fontWeight: FontWeight.w300),
+                                      color: AppColors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w300),
                                 ),
                               ],
                             ),

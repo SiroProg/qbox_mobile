@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../../../../../../core/constants/config.dart';
+import '../../../../../../core/constants/api_constants.dart';
 import '../../../../../../core/models/profile_models/employee_by_id_model.dart';
 import '../../../../../../core/styles/app_colors.dart';
 
@@ -25,7 +25,7 @@ class _ProfileHeaderWidgetState extends State<ProfileHeaderWidget> {
           height: 100,
           child: DecoratedBox(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(100),
               ),
               color: AppColors.lightDark95,
@@ -33,7 +33,7 @@ class _ProfileHeaderWidgetState extends State<ProfileHeaderWidget> {
                   ? DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(
-                        "${Config.baseUrl + widget.employee.photo!}",
+                        ApiConstants.baseUrl + widget.employee.photo!,
                       ),
                     )
                   : null,
@@ -41,8 +41,9 @@ class _ProfileHeaderWidgetState extends State<ProfileHeaderWidget> {
             child: widget.employee.photo == null
                 ? Center(
                     child: Text(
-                      "${widget.employee.firstName![0] + widget.employee.lastName![0]}",
-                      style: TextStyle(color: AppColors.black10),
+                      widget.employee.firstName![0] +
+                          widget.employee.lastName![0],
+                      style: const TextStyle(color: AppColors.black10),
                     ),
                   )
                 : null,
@@ -52,7 +53,7 @@ class _ProfileHeaderWidgetState extends State<ProfileHeaderWidget> {
           padding: const EdgeInsets.only(top: 10),
           child: Text(
             "${widget.employee.firstName ?? ""} ${widget.employee.lastName ?? ""}",
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.black,
               fontSize: 22,
               fontWeight: FontWeight.w700,
@@ -61,7 +62,7 @@ class _ProfileHeaderWidgetState extends State<ProfileHeaderWidget> {
         ),
         Text(
           widget.employee.role?.title ?? "",
-          style: TextStyle(
+          style: const TextStyle(
             color: AppColors.black10,
             fontWeight: FontWeight.w500,
             fontSize: 20,

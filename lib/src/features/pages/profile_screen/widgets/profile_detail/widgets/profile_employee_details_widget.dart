@@ -21,7 +21,7 @@ class ProfileEmployeeDetailsWidget extends StatelessWidget {
   String getSkills() {
     String result = '';
     for (SkillModel skill in skills) {
-      result += skill.titleRu ?? '';
+      result += skill.titleRu;
       result += ', ';
     }
     return result;
@@ -43,7 +43,7 @@ class ProfileEmployeeDetailsWidget extends StatelessWidget {
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children:[
+        children: [
           const Text(
             "Данные сотрудника",
             style: TextStyle(
@@ -125,12 +125,12 @@ class ProfileEmployeeDetailsWidget extends StatelessWidget {
                 const SizedBox(height: 10),
                 EmployeeDetailItem(
                   title: "Управление",
-                  value: employee.management.toString() ?? "",
+                  value: employee.management.toString(),
                 ),
                 const SizedBox(height: 10),
                 EmployeeDetailItem(
                   title: "Должность",
-                  value: employee.position.toString() ?? "",
+                  value: employee.position.toString(),
                 ),
                 const SizedBox(height: 10),
                 EmployeeDetailItem(
@@ -195,7 +195,7 @@ class ProfileEmployeeDetailsWidget extends StatelessWidget {
                 const SizedBox(height: 10),
                 EmployeeDetailItem(
                   title: "Роль в группе",
-                  value: position.titleRu ?? "",
+                  value: position.titleRu,
                 ),
                 const SizedBox(height: 10),
                 EmployeeDetailItem(
@@ -214,7 +214,12 @@ class ProfileEmployeeDetailsWidget extends StatelessWidget {
 class EmployeeDetailItem extends StatelessWidget {
   final String title;
   final String value;
-  const EmployeeDetailItem({Key? key, required this.title, required this.value});
+
+  const EmployeeDetailItem({
+    required this.title,
+    required this.value,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

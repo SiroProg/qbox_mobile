@@ -10,6 +10,6 @@ class ProfileHistoryOfChanges extends StatefulWidget {
 class _ProfileHistoryOfChangesState extends State<ProfileHistoryOfChanges> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

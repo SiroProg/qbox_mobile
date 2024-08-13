@@ -56,14 +56,14 @@ class SignInForm extends StatelessWidget {
                     authProvider.updateLogin(value);
                     _formKey.currentState!.validate();
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     prefixIcon: Icon(
                       CupertinoIcons.person,
                       color: AppColors.black10,
                     ),
                     hintText: 'Логин',
                     border: InputBorder.none,
-                    contentPadding: const EdgeInsets.all(10),
+                    contentPadding: EdgeInsets.all(10),
                   ),
                 ),
               ),
@@ -84,7 +84,7 @@ class SignInForm extends StatelessWidget {
                   },
                   obscureText: !authProvider.isPasswordVisible,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       CupertinoIcons.shield,
                       color: AppColors.black10,
                     ),

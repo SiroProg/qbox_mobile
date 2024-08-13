@@ -1,12 +1,19 @@
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:qbox_mobile/src/core/constants/api_constants.dart';
+import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
+// ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../../core/utils/logger.dart';
 import 'db_service/db_service.dart';
 
 class SocketService {
-  static late IO.Socket socket;
+  late IO.Socket socket;
 
-  void initSocket() {
-    socket = IO.io('https://inqbox.q19.kz/operator', {
+  void initSocket(BuildContext context) {
+    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+
+    socket = IO.io('${ApiConstants.baseUrl}/operator', {
       'transports': ['websocket'],
       'query': {
         'token': DBService.token,
@@ -26,17 +33,43 @@ class SocketService {
       info('Socket -> error: $error');
     });
 
+    socket.on("user_call", (data) {
+      info('Socket -> user_call: $data');
+
+      if (data['state'] == 'new') {
+        chatProvider.onUserCall(data);
+      }
+    });
+
+    socket.on("message", (data) {
+      socket.off("message");
+
+      info('Socket -> message: $data');
+      chatProvider.onMessage(data);
+    });
+
+    socket.onDisconnect((_) {
+      info('Socket -> disconnect');
+      socket.emit("message", {
+        "rtc": {"type": "hangup"}
+      });
+    });
+
     socket.connect();
   }
 
-   void startOperatorStatus() {
+  void startOperatorStatus() {
     socket.emit('operator_status', {'status': 'available', 'connect': true});
   }
 
-   void updateOperatorStatus(String status) {
+  void updateOperatorStatus(String status) {
     socket.emit("operator_status", {'status': status});
   }
-}
 
+  void dispose() {
+    socket.disconnect();
+    info('Socket -> dispose');
+  }
+}
 
 SocketService socketService = SocketService();

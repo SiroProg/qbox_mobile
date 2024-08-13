@@ -15,8 +15,8 @@ class BodyDetaylPanel extends StatelessWidget {
 
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Divider(),
         ),
         Padding(
@@ -25,16 +25,16 @@ class BodyDetaylPanel extends StatelessWidget {
             width: double.infinity,
             child: Column(
               children: [
-                Row(
+                const Row(
                   children: [
                     Icon(
                       CupertinoIcons.person_alt_circle,
                       color: AppColors.black10,
                     ),
-                    const SizedBox(width: 10),
+                    SizedBox(width: 10),
                     Text(
                       'В очереди - ',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.black10,
                         fontSize: 16,
                       ),
@@ -42,7 +42,7 @@ class BodyDetaylPanel extends StatelessWidget {
                     Spacer(),
                     Text(
                       '0',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.black10,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -53,19 +53,19 @@ class BodyDetaylPanel extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       CupertinoIcons.phone_arrow_down_left,
                       color: AppColors.green,
                     ),
                     const SizedBox(width: 10),
-                    Text(
+                    const Text(
                       'Принято - ',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.black10,
                         fontSize: 16,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
                       panelProvider.performance?.calls.accepted.toString() ?? '0',
                       style: const TextStyle(
@@ -79,19 +79,19 @@ class BodyDetaylPanel extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       CupertinoIcons.phone_arrow_up_right,
                       color: AppColors.red,
                     ),
                     const SizedBox(width: 10),
-                    Text(
+                    const Text(
                       'Пропущено - ',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.black10,
                         fontSize: 16,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
                       panelProvider.performance?.calls.missed.toString() ?? '0',
                       style: const TextStyle(
@@ -105,19 +105,19 @@ class BodyDetaylPanel extends StatelessWidget {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       CupertinoIcons.star_fill,
                       color: AppColors.yellow,
                     ),
                     const SizedBox(width: 10),
-                    Text(
+                    const Text(
                       'Рейтинг - ',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.black10,
                         fontSize: 16,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
                       panelProvider.performance?.averageRating.rating.toString() ?? '0',
                       style: const TextStyle(
@@ -132,8 +132,8 @@ class BodyDetaylPanel extends StatelessWidget {
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Divider(),
         ),
       ],
