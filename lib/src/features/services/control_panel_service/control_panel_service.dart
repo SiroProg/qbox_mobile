@@ -108,6 +108,7 @@ class ControlPanelService {
     try {
       final response = await _dio.get(
         '/api/calls/workspace/conversations',
+
         queryParameters: {
           'interval': interval,
           'operator_id': operatorId,
@@ -116,6 +117,8 @@ class ControlPanelService {
           'token': DBService.token,
         },
       );
+
+      print('$interval $operatorId $page $limit ${DBService.token}');
 
       if (response.statusCode == 200 && response.data["_success"]) {
         List conversationsJson = response.data["data"]["conversations"];

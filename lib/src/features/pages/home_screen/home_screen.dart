@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: AppColors.white,
               child: const Text(
                 "Socket",
-                style: TextStyle(
+                style: TextStyle( 
                   color: AppColors.black,
                 ),
               ),
