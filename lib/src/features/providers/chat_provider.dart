@@ -15,6 +15,8 @@ import 'package:qbox_mobile/src/features/services/socket_service.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:flutter/material.dart';
 
+import '../pages/operator_screen/operator_call_screen.dart';
+
 class ChatProvider extends ChangeNotifier {
   String? chatId;
   BuildContext? context;
@@ -280,12 +282,12 @@ class ChatProvider extends ChangeNotifier {
 
             _assetsAudioPlayer.stop();
 
-          //   Navigator.pushReplacement(
-          //     context,
-          //     MaterialPageRoute(
-          //       // builder: (context) => const OperatorCallScreen(),
-          //     // ),
-          //   // );
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const OperatorCallScreen(),
+              ),
+            );
           },
           onCancel: () {
             socketService.socket.emit("operator_reject");

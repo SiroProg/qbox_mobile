@@ -153,10 +153,10 @@ class Feedback {
 
 // Модель для клиента (Customer)
 class Customer {
-  final int id;
-  final String firstName;
-  final String lastName;
-  final String patronymic;
+  final int? id;
+  final String? firstName;
+  final String? lastName;
+  final String? patronymic;
 
   Customer({
     required this.id,
@@ -167,10 +167,10 @@ class Customer {
 
   factory Customer.fromJson(Map<String, dynamic> json) {
     return Customer(
-      id: json['id'] as int,
-      firstName: json['first_name'] as String,
-      lastName: json['last_name'] as String,
-      patronymic: json['patronymic'] as String,
+      id: json['id'] as int?,
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
+      patronymic: json['patronymic'] as String?,
     );
   }
 
@@ -232,7 +232,7 @@ class ConversationModel {
   factory ConversationModel.fromJson(Map<String, dynamic> json) {
     return ConversationModel(
       id: json['id'] as int,
-      customer: Customer.fromJson(json['customer']),
+      customer: Customer.fromJson(json['customer'] ?? {}),
       channel: json['channel'] as String,
       queue: Queue.fromJson(json['queue']),
       startedAt: json['started_at'] as int,
