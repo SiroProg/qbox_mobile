@@ -1,13 +1,13 @@
 bool isUrlImage(String string) {
   const String urlPattern =
-      r'^(http|https):\/\/[^\s$.?#].[^\s]*\.(png|jpg|jpeg|gif)$';
+      r'^(http|https):\/\/[^\s$.?#].[^\s]*\.(png|jpg|jpeg|gif|avif)$';
   final bool result = RegExp(urlPattern, caseSensitive: false).hasMatch(string);
   return result;
 }
 
 bool isUrlFile(String string) {
   const String urlPattern =
-      r'^(http|https):\/\/[^\s$.?#].[^\s]*\.(pdf|doc|docx|xls|xlsx|ppt|pptx|png|jpg|jpeg|gif|mp4|avi|mov|wmv)$';
+      r'^(http|https):\/\/[^\s$.?#].[^\s]*\.(pdf|doc|docx|xls|xlsx|ppt|pptx)$';
   final bool result = RegExp(urlPattern, caseSensitive: false).hasMatch(string);
   return result;
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
 import '../../../core/models/auth_models/employee_model.dart';
 import '../../../core/models/control_panel_models/status_model.dart';
 import '../../../core/styles/app_colors.dart';
@@ -24,6 +25,10 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   void initState() {
+    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+    chatProvider.initialize();
+    chatProvider.setBuildContext(context);
+
     super.initState();
   }
 
@@ -31,7 +36,8 @@ class _VideoScreenState extends State<VideoScreen> {
     final panelProvider = Provider.of<ControlPanelProvider>(context);
     statuses = await ControlPanelService().fetchOperatorStatuses();
     socketService.startOperatorStatus();
-    panelProvider.performance = await ControlPanelService().fetchOperatorPerformance();
+    panelProvider.performance =
+        await ControlPanelService().fetchOperatorPerformance();
     panelProvider.conversations =
         await ControlPanelService().fetchConversations(page: 1, limit: 10);
     panelProvider.missedCalls =

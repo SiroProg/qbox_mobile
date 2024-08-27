@@ -15,8 +15,8 @@ class TelephonyModel {
     required this.wsServers,
   });
 
-  final Map<String, String> callLangs;
-  final Map<String, Map<String, String>> callReasons;
+  final Map<String, String>? callLangs;
+  final Map<String, Map<String, String>?>? callReasons;
   final List<String> callServicedReasons;
   final CallbackModel callback;
   final List<String> queues;
@@ -41,13 +41,13 @@ class TelephonyModel {
         regions: (json['regions'] as List)
             .map((e) => RegionModel.fromJson(e))
             .toList(),
-        uri: json['uri'] as String,
+        uri: json['uri'] as String? ?? 'null',
         wsServers: List<String>.from(json['ws_servers'] as List),
       );
 
   Map<String, Object?> toJson() => <String, Object?>{
         'call_langs': callLangs,
-        'call_reasons': callReasons.map((k, e) => MapEntry(
+        'call_reasons': callReasons?.map((k, e) => MapEntry(
               k,
               e,
             )),

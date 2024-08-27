@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import 'package:qbox_mobile/src/core/styles/app_colors.dart';
+import 'package:qbox_mobile/src/features/pages/operator_screen/widget/custom_bottom_app_bar.dart';
 import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
-import 'chat_screen.dart';
-import 'widget/end_call_bottom_sheet.dart';
+
 import 'package:provider/provider.dart';
 
 class OperatorCallScreen extends StatelessWidget {
@@ -84,62 +83,7 @@ class OperatorCallScreen extends StatelessWidget {
               );
             },
           ),
-          bottomNavigationBar: BottomAppBar(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  onPressed: () => chatProvider.toggleVideo(),
-                  icon: Icon(
-                    chatProvider.localStream?.getVideoTracks().first.enabled ??
-                            false
-                        ? Icons.videocam
-                        : Icons.videocam_off,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () => chatProvider.toggleAudio(),
-                  icon: Icon(
-                    chatProvider.localStream?.getAudioTracks().first.enabled ??
-                            false
-                        ? Icons.mic
-                        : Icons.mic_off,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () => chatProvider.switchCamera(),
-                  icon: const Icon(Icons.switch_camera),
-                ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const ChatScreen(),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.message_outlined),
-                ),
-                FloatingActionButton(
-                  backgroundColor: AppColors.red,
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (context) => const EndCallBottomSheet(),
-                    );
-                  },
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: const Icon(
-                    Icons.call_end,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          bottomNavigationBar: const CustomBottomAppBar(),
         ),
       ),
     );

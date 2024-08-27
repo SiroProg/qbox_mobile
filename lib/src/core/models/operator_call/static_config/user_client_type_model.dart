@@ -4,13 +4,13 @@ class UserClientTypeModel {
     required this.title,
   });
 
-  final int id;
+  final int? id;
   final String title;
 
   factory UserClientTypeModel.fromJson(Map<String, Object?> json) =>
       UserClientTypeModel(
-        id: json['id'] as int,
-        title: json['title'] as String,
+        id: json['id'] as int?,
+        title: json['title'] as String? ?? 'null',
       );
 
   Map<String, Object?> toJson() => <String, Object?>{

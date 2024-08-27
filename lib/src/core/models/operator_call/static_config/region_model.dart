@@ -8,8 +8,8 @@ class RegionModel {
   final String title;
 
   factory RegionModel.fromJson(Map<String, Object?> json) => RegionModel(
-        region: json['region'] as String,
-        title: json['title'] as String,
+        region: json['region'] as String? ?? 'null',
+        title: json['title'] as String? ?? 'null',
       );
 
   Map<String, Object?> toJson() => <String, Object?>{

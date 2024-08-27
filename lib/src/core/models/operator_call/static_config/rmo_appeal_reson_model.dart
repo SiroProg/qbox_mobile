@@ -24,7 +24,7 @@ class RmoAppealReasonModel {
       RmoAppealReasonModel(
         key: json['key'] as String? ?? '',
         required: json['required'] as bool? ?? false,
-        title: json['title'] as String,
+        title: json['title'] as String? ?? 'null',
         titleEn: json['title_en'] as String?,
         titleKk: json['title_kk'] as String?,
         titleRu: json['title_ru'] as String?,

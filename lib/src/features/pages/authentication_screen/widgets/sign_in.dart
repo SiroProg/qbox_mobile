@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
+import 'package:qbox_mobile/src/features/pages/home_screen/home_screen.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../providers/auth_provider.dart';
-import '../../home_screen/home_screen.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});

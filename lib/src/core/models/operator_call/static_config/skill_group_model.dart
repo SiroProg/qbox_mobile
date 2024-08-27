@@ -11,9 +11,9 @@ class SkillGroupModel {
     required this.topic,
   });
 
-  final Map<String, Object?> configs;
-  final int id;
-  final int level;
+  final Map<String, Object?>? configs;
+  final int? id;
+  final int? level;
   final String media;
   final int status;
   final String title;
@@ -21,10 +21,10 @@ class SkillGroupModel {
 
   factory SkillGroupModel.fromJson(Map<String, Object?> json) =>
       SkillGroupModel(
-        configs: json['configs'] as Map<String, Object?>,
-        id: json['id'] as int,
-        level: json['level'] as int,
-        media: json['media'] as String,
+        configs: json['configs'] as Map<String, Object?>?,
+        id: json['id'] as int?,
+        level: json['level'] as int?,
+        media: json['media'] as String? ?? 'null',
         status: json['status'] as int,
         title: json['title'] as String,
         topic: json['topic'] as String,

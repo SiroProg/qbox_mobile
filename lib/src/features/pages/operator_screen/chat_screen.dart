@@ -12,15 +12,28 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF4F5F9),
-      appBar: AppBar(
-        title: const Text('Chat'),
-        centerTitle: true,
-      ),
-      body: Consumer<ChatProvider>(
-        builder: (context, provider, child) {
-          return Column(
+    return Consumer<ChatProvider>(
+      // ignore: deprecated_member_use
+      builder: (context, provider, child) => WillPopScope(
+        onWillPop: () {
+          provider.setMessageCount();
+          Navigator.pop(context);
+          return Future.value(false);
+        },
+        child: Scaffold(
+          backgroundColor: const Color(0xFFF4F5F9),
+          appBar: AppBar(
+            title: const Text('Chat'),
+            centerTitle: true,
+            leading: IconButton(
+              onPressed: () {
+                provider.setMessageCount();
+                Navigator.pop(context);
+              },
+              icon: const Icon(Icons.arrow_back),
+            ),
+          ),
+          body: Column(
             children: [
               Expanded(
                 child: ListView.builder(
@@ -38,8 +51,8 @@ class ChatScreen extends StatelessWidget {
               ),
               ChatInputBar(provider: provider),
             ],
-          );
-        },
+          ),
+        ),
       ),
     );
   }

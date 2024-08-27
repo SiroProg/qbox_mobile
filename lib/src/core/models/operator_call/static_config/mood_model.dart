@@ -5,14 +5,14 @@ class MoodModel {
     required this.title,
   });
 
-  final int id;
-  final int status;
+  final int? id;
+  final int? status;
   final String title;
 
   factory MoodModel.fromJson(Map<String, Object?> json) => MoodModel(
-        id: json['id'] as int,
-        status: json['status'] as int,
-        title: json['title'] as String,
+        id: json['id'] as int?,
+        status: json['status'] as int?,
+        title: json['title'] as String? ?? 'null',
       );
 
   Map<String, Object?> toJson() => <String, Object?>{

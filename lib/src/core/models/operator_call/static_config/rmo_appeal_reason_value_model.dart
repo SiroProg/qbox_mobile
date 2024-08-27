@@ -7,7 +7,7 @@ class RmoAppealReasonValue {
     this.titleRu,
   });
 
-  final int id;
+  final int? id;
   final String title;
   final String? titleEn;
   final String? titleKk;
@@ -15,8 +15,8 @@ class RmoAppealReasonValue {
 
   factory RmoAppealReasonValue.fromJson(Map<String, Object?> json) =>
       RmoAppealReasonValue(
-        id: json['id'] as int,
-        title: json['title'] as String,
+        id: json['id'] as int?,
+        title: json['title'] as String? ?? 'null',
         titleEn: json['title_en'] as String?,
         titleKk: json['title_kk'] as String?,
         titleRu: json['title_ru'] as String?,

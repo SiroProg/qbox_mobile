@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qbox_mobile/src/core/utils/logger.dart';
+import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_app_bar.dart';
+import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_bottom_navigation.dart';
 import 'package:qbox_mobile/src/features/services/profile_service/profile_service.dart';
 import '../../../core/constants/api_constants.dart';
 import '../../../core/models/profile_models/calls_model.dart';
@@ -58,23 +60,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(),
       backgroundColor: AppColors.white,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        surfaceTintColor: AppColors.white,
-        foregroundColor: AppColors.white,
-        centerTitle: true,
-        title: const Text(
-          "My account",
-          style: TextStyle(
-            color: AppColors.black,
-            fontSize: 22,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
       body: isLoading
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : SizedBox(
               width: double.infinity,
               height: double.infinity,
@@ -289,6 +278,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
+      bottomNavigationBar: const CustomBottomNavigation(),
     );
   }
 

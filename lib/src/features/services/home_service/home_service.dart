@@ -12,7 +12,7 @@ class HomeService {
       maxRedirects: 5,
     );
 
-  Future<Employee> fetchEmployee(String token) async {
+  static Future<Employee> fetchEmployee(String token) async {
     try {
       final response =
           await _dio.get('/api/staff/employees/me', queryParameters: {

@@ -6,12 +6,12 @@ class TopicModel {
     required this.topic,
   });
 
-  final Map<String, String> title;
+  final Map<String, String>? title;
   final String topic;
 
   factory TopicModel.fromJson(Map<String, Object?> json) => TopicModel(
         title: Map<String, String>.from(json['title'] as Map<String, String>),
-        topic: json['topic'] as String,
+        topic: json['topic'] as String? ?? 'null',
       );
 
   Map<String, Object?> toJson() => <String, Object?>{

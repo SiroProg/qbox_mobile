@@ -1,16 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:qbox_mobile/src/features/pages/employess/employees_screen.dart';
-import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
-import '../../../core/models/auth_models/employee_model.dart';
-import '../../../core/styles/app_colors.dart';
-import '../../providers/auth_provider.dart';
-import '../../services/db_service/db_service.dart';
-import '../../services/home_service/home_service.dart';
-import '../../services/socket_service.dart';
-import '../control_panel_screen/control_panel_screen.dart';
-import '../profile_screen/profile_screen.dart';
+import 'package:qbox_mobile/src/features/pages/contact_centre/contact_center_screen.dart';
+import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_app_bar.dart';
+import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_bottom_navigation.dart';
+import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_list_tile.dart';
+import 'package:qbox_mobile/src/features/services/socket_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,32 +13,64 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Employee _employeeFuture;
-
-  bool _isSocketInitialized = false;
+  late final Map<String, VoidCallback> actions;
 
   @override
   void initState() {
     super.initState();
-    _loadEmployee();
-
     socketService.initSocket(context);
-    if (!_isSocketInitialized) {
-      socketService.initSocket(context);
-      _isSocketInitialized = true;
-    }
 
-    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
-
-    chatProvider.initialize();
-    chatProvider.setBuildContext(context);
-  }
-
-  void _loadEmployee() async {
-    String token = DBService.token;
-    HomeService apiService = HomeService();
-    _employeeFuture = await apiService.fetchEmployee(token);
-    DBService.id = _employeeFuture.id;
+    actions = {
+      'Contact Center': () {
+        // print('Navigating to Contact Center');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ContactCenterScreen(),
+          ),
+        );
+      },
+      'Tickets': () {
+        // print('Navigating to Tickets');
+        // Handle Tickets action
+      },
+      'Sales': () {
+        // print('Navigating to Sales');
+        // Handle Sales action
+      },
+      'Marketing': () {
+        // print('Navigating to Marketing');
+        // Handle Marketing action
+      },
+      'Integration': () {
+        // print('Navigating to Integration');
+        // Handle Integration action
+      },
+      'Management': () {
+        // print('Navigating to Management');
+        // Handle Management action
+      },
+      'Disk': () {
+        // print('Navigating to Disk');
+        // Handle Disk action
+      },
+      'To Do': () {
+        // print('Navigating to To Do');
+        // Handle To Do action
+      },
+      'Analytics': () {
+        // print('Navigating to Analytics');
+        // Handle Analytics action
+      },
+      'HR-WFM': () {
+        // print('Navigating to HR-WFM');
+        // Handle HR-WFM action
+      },
+      'Video conference': () {
+        // print('Navigating to Video conference');
+        // Handle Video conference action
+      },
+    };
   }
 
   @override
@@ -54,94 +79,93 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  final List<Map<String, Object>> items = [
+    {
+      'icon': Icons.headset,
+      'title': 'Contact Center',
+      'subtitle': 'Calls, chatbots, knowledge base'
+    },
+    {
+      'icon': Icons.markunread_sharp,
+      'title': 'Tickets',
+      'subtitle': 'Managing and tracking tasks and customer requests'
+    },
+    {
+      'icon': Icons.rocket_launch,
+      'title': 'Sales',
+      'subtitle': 'Lead processing, sales funnel, closing deals'
+    },
+    {
+      'icon': Icons.mark_email_read,
+      'title': 'Marketing',
+      'subtitle': 'Mailing lists, surveys, scanning of social networks'
+    },
+    {
+      'icon': Icons.arrow_outward_outlined,
+      'title': 'Integration',
+      'subtitle': 'Integration with other platforms and services'
+    },
+    {
+      'icon': Icons.manage_accounts_rounded,
+      'title': 'Management',
+      'subtitle': 'Account management, logs, access'
+    },
+    {
+      'icon': Icons.folder_copy,
+      'title': 'Disk',
+      'subtitle': 'Cloud storage of electronic documents'
+    },
+    {
+      'icon': Icons.checklist,
+      'title': 'To Do',
+      'subtitle': 'Planning and management of priority tasks'
+    },
+    {
+      'icon': Icons.analytics,
+      'title': 'Analytics',
+      'subtitle': 'Data Collection and Analysis Center'
+    },
+    {
+      'icon': Icons.browse_gallery_rounded,
+      'title': 'HR-WFM',
+      'subtitle': 'Управление рабочими процессами и ресурсами'
+    },
+    {
+      'icon': Icons.video_call,
+      'title': 'Video conference',
+      'subtitle': 'Planning and conducting video conferences'
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
-
     return Scaffold(
-      backgroundColor: AppColors.black,
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CupertinoButton(
-              onPressed: () {
-                authProvider.user = _employeeFuture;
-                _loadEmployee();
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => ProfileScreen(id: _employeeFuture.id),
-                  ),
-                );
+      appBar: const CustomAppBar(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 16.0,
+            mainAxisSpacing: 16.0,
+            childAspectRatio: 3 / 2,
+          ),
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            final item = items[index];
+            return CustomListTile(
+              icon: item['icon'] as IconData,
+              title: item['title'] as String,
+              subtitle: item['subtitle'] as String,
+              onTap: () {
+                final action = actions[item['title'] as String];
+                if (action != null) action();
               },
-              color: AppColors.white,
-              child: const Text(
-                "Profile",
-                style: TextStyle(
-                  color: AppColors.black,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            CupertinoButton(
-              onPressed: () {
-                authProvider.user = _employeeFuture;
-                _loadEmployee();
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => VideoScreen(
-                      employee: _employeeFuture,
-                    ),
-                  ),
-                );
-              },
-              color: AppColors.white,
-              child: const Text(
-                "Socket",
-                style: TextStyle(
-                  color: AppColors.black,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            CupertinoButton(
-              onPressed: () {
-                DBService.token = 'b72e2d8666d64bc188b65ab53ec7e5a3';
-              },
-              color: AppColors.white,
-              child: const Text(
-                "New token",
-                style: TextStyle(
-                  color: AppColors.black,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            CupertinoButton(
-              color: AppColors.white,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (context) => const EmployeesScreen(),
-                  ),
-                );
-              },
-              child: const Text(
-                'Employess',
-                style: TextStyle(
-                  color: AppColors.black,
-                ),
-              ),
-            ),
-          ],
+            );
+          },
         ),
       ),
+      bottomNavigationBar: const CustomBottomNavigation(),
     );
   }
 }

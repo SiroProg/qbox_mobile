@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/upload_model.dart';
-import 'package:qbox_mobile/src/core/models/operator_call/static_config/config_model.dart';
 import '../../../core/constants/api_constants.dart';
+import '../../../core/models/operator_call/static_config/new_model/static_model.dart';
 
 class OperatorService {
   const OperatorService._();
@@ -41,24 +41,18 @@ class OperatorService {
     }
   }
 
-  static Future<ConfigModel> getStaticConfig() async {
+  static Future<StaticModel> getStaticConfig() async {
     try {
       final response = await _dio.get('/static/configs.json');
 
       if (response.statusCode == 200) {
         final responseData = response.data;
-        return ConfigModel.fromJson(
-          responseData['rmo_appeal_reasons'],
-        );
+        return StaticModel.fromJson(responseData);
       } else {
         throw Exception('Failed to get static config');
       }
     } catch (e) {
-      throw Exception('Failed to get static config');
+      throw Exception('Failed to get static config $e');
     }
   }
 }
-
-
-// rmo_appeal_reasons
-// user_treatment_types

@@ -35,7 +35,7 @@ class ConfigModel {
 
   final String id;
   final int errorHandlingProjectId;
-  final Map<String, MailboxModel> mailboxes;
+  final Map<String, MailboxModel>? mailboxes;
   final PostProcessingModel postProcessing;
   final List<MoodModel> moods;
   final List<RmoAppealReasonModel> rmoAppealReasons;
@@ -53,14 +53,16 @@ class ConfigModel {
   final bool videoRecord;
 
   factory ConfigModel.fromJson(Map<String, dynamic> json) => ConfigModel(
-        id: json['id'],
-        errorHandlingProjectId: json['error_handling_project_id'],
+        id: json['id'] as String? ?? 'null',
+        errorHandlingProjectId: json['error_handling_project_id'] as int? ?? 0,
         mailboxes: (json['mailboxes'] as Map<String, dynamic>).map(
           (k, e) => MapEntry(k, MailboxModel.fromJson(e)),
         ),
         postProcessing: PostProcessingModel.fromJson(json['post-processing']),
-        moods:
-            (json['moods'] as List).map((e) => MoodModel.fromJson(e)).toList(),
+        moods: (json['moods'] as List)
+                .map((e) => MoodModel.fromJson(e))
+                .toList() ??
+            [],
         rmoAppealReasons: (json['rmo_appeal_reasons'] as List)
             .map((e) => RmoAppealReasonModel.fromJson(e))
             .toList(),
@@ -91,7 +93,7 @@ class ConfigModel {
   Map<String, Object?> toJson() => <String, Object?>{
         'id': id,
         'error_handling_project_id': errorHandlingProjectId,
-        'mailboxes': mailboxes.map((k, e) => MapEntry(k, e.toJson())),
+        'mailboxes': mailboxes?.map((k, e) => MapEntry(k, e.toJson())),
         'post-processing': postProcessing.toJson(),
         'moods': moods.map((e) => e.toJson()).toList(),
         'rmo_appeal_reasons': rmoAppealReasons.map((e) => e.toJson()).toList(),
