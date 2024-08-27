@@ -7,6 +7,7 @@ import '../../../core/models/control_panel_models/missed_calls_model.dart';
 import '../../../core/models/control_panel_models/perfomens_model.dart';
 import '../../../core/models/control_panel_models/status_model.dart';
 import '../../../core/models/control_panel_models/сonversation_model.dart';
+import '../../../core/utils/logger.dart';
 import '../db_service/db_service.dart';
 
 class ControlPanelService {
@@ -107,6 +108,7 @@ class ControlPanelService {
     try {
       final response = await _dio.get(
         '/api/calls/workspace/conversations',
+
         queryParameters: {
           'interval': interval,
           'operator_id': operatorId,
@@ -116,8 +118,14 @@ class ControlPanelService {
         },
       );
 
+      print('$interval $operatorId $page $limit ${DBService.token}');
+
       if (response.statusCode == 200 && response.data["_success"]) {
         List conversationsJson = response.data["data"]["conversations"];
+        info(conversationsJson
+            .map((json) => ConversationModel.fromJson(json))
+            .toList());
+        info('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n');
         return conversationsJson
             .map((json) => ConversationModel.fromJson(json))
             .toList();

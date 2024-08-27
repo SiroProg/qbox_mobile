@@ -44,7 +44,8 @@ class _VideoScreenState extends State<VideoScreen> {
         await ControlPanelService().fetchMissedCalls(page: 1, limit: 10);
     panelProvider.statuses = statuses;
     panelProvider.changeStatus(
-        statuses.firstWhere((status) => status.key == 'available'));
+      statuses.firstWhere((status) => status.key == 'available'),
+    );
     panelProvider.callOperators = await ControlPanelService().fetchOperators();
     panelProvider.callTeams = await ControlPanelService().fetchCallTeams();
   }

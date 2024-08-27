@@ -151,10 +151,62 @@ class Feedback {
   int get hashCode => rating.hashCode;
 }
 
+// Модель для клиента (Customer)
+class Customer {
+  final int? id;
+  final String? firstName;
+  final String? lastName;
+  final String? patronymic;
+
+  Customer({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.patronymic,
+  });
+
+  factory Customer.fromJson(Map<String, dynamic> json) {
+    return Customer(
+      id: json['id'] as int?,
+      firstName: json['first_name'] as String?,
+      lastName: json['last_name'] as String?,
+      patronymic: json['patronymic'] as String?,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'first_name': firstName,
+      'last_name': lastName,
+      'patronymic': patronymic,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Customer{id: $id, firstName: $firstName, lastName: $lastName, patronymic: $patronymic}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! Customer) return false;
+    return id == other.id &&
+        firstName == other.firstName &&
+        lastName == other.lastName &&
+        patronymic == other.patronymic;
+  }
+
+  @override
+  int get hashCode =>
+      id.hashCode ^ firstName.hashCode ^ lastName.hashCode ^ patronymic.hashCode;
+}
+
 // Модель для разговора (Conversation)
 class ConversationModel {
   final int id;
-  final String? customer;
+  final Customer? customer;
   final String channel;
   final Queue queue;
   final int startedAt;
@@ -166,7 +218,7 @@ class ConversationModel {
 
   ConversationModel({
     required this.id,
-    this.customer,
+    required this.customer,
     required this.channel,
     required this.queue,
     required this.startedAt,
@@ -180,7 +232,7 @@ class ConversationModel {
   factory ConversationModel.fromJson(Map<String, dynamic> json) {
     return ConversationModel(
       id: json['id'] as int,
-      customer: json['customer'] as String?,
+      customer: Customer.fromJson(json['customer'] ?? {}),
       channel: json['channel'] as String,
       queue: Queue.fromJson(json['queue']),
       startedAt: json['started_at'] as int,
@@ -195,7 +247,7 @@ class ConversationModel {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'customer': customer,
+      'customer': customer?.toJson(),
       'channel': channel,
       'queue': queue.toJson(),
       'started_at': startedAt,

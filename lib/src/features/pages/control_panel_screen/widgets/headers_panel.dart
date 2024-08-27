@@ -34,15 +34,14 @@ class _HeadersPanelState extends State<HeadersPanel> {
                 height: 90,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
+                    borderRadius: BorderRadius.all(
                       Radius.circular(10),
                     ),
                     image: panelProvider.employee.photo != null
                         ? DecorationImage(
                             fit: BoxFit.cover,
                             image: NetworkImage(
-                              ApiConstants.baseUrl +
-                                  panelProvider.employee.photo!,
+                              ApiConstants.baseUrl + panelProvider.employee.photo!,
                             ),
                           )
                         : null,
@@ -50,9 +49,8 @@ class _HeadersPanelState extends State<HeadersPanel> {
                   child: panelProvider.employee.photo == null
                       ? Center(
                           child: Text(
-                            panelProvider.employee.firstName[0] +
-                                panelProvider.employee.lastName[0],
-                            style: const TextStyle(color: AppColors.black10),
+                            "${panelProvider.employee.firstName[0] + panelProvider.employee.lastName[0]}",
+                            style: TextStyle(color: AppColors.black10),
                           ),
                         )
                       : null,
@@ -63,11 +61,11 @@ class _HeadersPanelState extends State<HeadersPanel> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
                   Text(
-                    "${panelProvider.employee.firstName} ${panelProvider.employee.lastName}",
+                    "${panelProvider.employee.firstName ?? ""} ${panelProvider.employee.lastName ?? ""}",
                     style: const TextStyle(
                       color: AppColors.black,
                       fontSize: 20,
@@ -90,7 +88,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                           showBottomSheet(
                             context: context,
                             builder: (context) => CupertinoActionSheet(
-                              title: const Text('Выберите статус'),
+                              title: Text('Выберите статус'),
                               actions: List.generate(
                                   panelProvider.statuses.where((index) {
                                     return index.details.show;
@@ -107,8 +105,8 @@ class _HeadersPanelState extends State<HeadersPanel> {
                                       panelProvider.changeStatus(status);
                                       panelProvider.startStopwatch();
 
-                                      socketService
-                                          .updateOperatorStatus(status.key);
+                                      socketService.updateOperatorStatus(
+                                          status.key);
                                     }
 
                                     Navigator.pop(context);
@@ -141,7 +139,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                                   panelProvider.stopStopwatch();
                                   Navigator.pop(context);
                                 },
-                                child: const Text('Отмена'),
+                                child: Text('Отмена'),
                               ),
                             ),
                           );
@@ -149,7 +147,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                         child: SizedBox(
                           child: DecoratedBox(
                             decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
+                              borderRadius: BorderRadius.all(
                                 Radius.circular(10),
                               ),
                               border: Border.all(
@@ -163,7 +161,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                                 horizontal: 20,
                               ),
                               child: panelProvider.initialStatus == null
-                                  ? const CircularProgressIndicator()
+                                  ? CircularProgressIndicator()
                                   : Row(
                                       children: [
                                         SizedBox(
@@ -196,11 +194,11 @@ class _HeadersPanelState extends State<HeadersPanel> {
                           ),
                         ),
                       ),
-                      const SizedBox(width: 5),
+                      SizedBox(width: 5),
                       SizedBox(
                         child: DecoratedBox(
                           decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(
+                            borderRadius: BorderRadius.all(
                               Radius.circular(10),
                             ),
                             border: Border.all(
@@ -227,7 +225,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                 ],
               ),
             ],
@@ -246,13 +244,13 @@ class _HeadersPanelState extends State<HeadersPanel> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: const Text(
+                            child: Text(
                               'Отмена',
                               style: TextStyle(
                                   color: AppColors.black, fontSize: 16),
                             ),
                           ),
-                          title: const Text(
+                          title: Text(
                             'Выберите оператора',
                             style:
                                 TextStyle(color: AppColors.black, fontSize: 16),
@@ -298,17 +296,16 @@ class _HeadersPanelState extends State<HeadersPanel> {
                         ),
                       );
                     },
+                    child: Text(
+                      'Перенаправить',
+                      style: TextStyle(color: AppColors.black),
+                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.white,
                       shape: ContinuousRectangleBorder(
-                        side: const BorderSide(
-                            color: AppColors.black10, width: 1),
+                        side: BorderSide(color: AppColors.black10, width: 1),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                    ),
-                    child: const Text(
-                      'Перенаправить',
-                      style: TextStyle(color: AppColors.black),
                     ),
                   ),
                 ),
@@ -320,8 +317,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.white,
                     shape: ContinuousRectangleBorder(
-                      side:
-                          const BorderSide(color: AppColors.black10, width: 1),
+                      side: BorderSide(color: AppColors.black10, width: 1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -334,7 +330,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                       print('Обновлено');
                     }();
                   },
-                  child: const Icon(
+                  child: Icon(
                     Icons.update,
                     color: AppColors.black,
                   ),

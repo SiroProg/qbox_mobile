@@ -1,7 +1,6 @@
 import 'package:qbox_mobile/src/features/services/operator_call_service/operator_api_service.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/call_user_model.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/upload_model.dart';
-import 'package:qbox_mobile/src/features/pages/operator_screen/operator_call_screen.dart';
 import 'package:qbox_mobile/src/features/pages/operator_screen/widget/call_screen.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/chat.dart';
 import '../../core/models/operator_call/static_config/new_model/static_model.dart';
@@ -15,6 +14,8 @@ import 'package:qbox_mobile/src/core/utils/file_picker.dart';
 import 'package:qbox_mobile/src/core/utils/logger.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:flutter/material.dart';
+
+import '../pages/operator_screen/operator_call_screen.dart';
 
 class ChatProvider extends ChangeNotifier {
   String? chatId;
@@ -299,7 +300,7 @@ class ChatProvider extends ChangeNotifier {
           },
           onCancel: () {
             socketService.socket.emit("operator_reject");
-            socketService.socket.emit("operator_cancel");
+            // socketService.socket.emit("operator_cancel");
 
             _assetsAudioPlayer.stop();
             Navigator.pop(context);

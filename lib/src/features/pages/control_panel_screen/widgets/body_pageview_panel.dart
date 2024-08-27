@@ -157,7 +157,7 @@ class IncomingCallsPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final panelProvider = Provider.of<ControlPanelProvider>(context);
-    return SafeArea(
+    return  SafeArea(
       child: ListView.builder(
         itemCount: panelProvider.conversations.length,
         itemBuilder: (context, index) {
@@ -250,7 +250,12 @@ class MissedCallsPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final panelProvider = Provider.of<ControlPanelProvider>(context);
-    return ListView.builder(
+    return panelProvider.missedCalls.isEmpty ? const SizedBox(
+      height: 100,
+      child: Center(
+        child: Text('Пропущенных звонков нет'),
+      ),
+    ) : ListView.builder(
       itemCount: panelProvider.missedCalls.length,
       itemBuilder: (context, index) {
         return SizedBox(
@@ -322,7 +327,7 @@ class CreatedTasksPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('CreatedTasksPanel'),
+      child: Text('Созданных задач нет'),
     );
   }
 }
