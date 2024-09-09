@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/models/auth_models/employee_model.dart';
 import '../../core/models/control_panel_models/call_operator_model.dart';
 import '../../core/models/control_panel_models/call_team_model.dart';
@@ -30,6 +32,32 @@ class ControlPanelProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Color getStatusColor(String key) {
+    switch (key) {
+      case 'available':
+        return const Color(0xFF00C853);
+      default:
+        return Colors.red;
+    }
+  }
+
+  void setInitialButtonIndex(int index, BuildContext context) {
+    initialButtonIndex = index;
+    changePage(index);
+    notifyListeners();
+  }
+
+  num getFeedbackAverage() {
+    try {
+      return conversations
+              .map((conversation) => conversation.feedback.rating)
+              .reduce((a, b) => a + b) /
+          conversations.length;
+    } catch (e) {
+      return 0;
+    }
+  }
+
   void initEmployee(Employee employee) {
     this.employee = employee;
   }
@@ -38,19 +66,6 @@ class ControlPanelProvider extends ChangeNotifier {
     stopwatch.reset();
     stopwatch.start();
     startTimer();
-  }
-
-  void scrollToCenter(int index, BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    const buttonWidth = 160.0;
-    final targetPosition =
-        index * (buttonWidth + 10) - screenWidth / 2 + buttonWidth / 2;
-
-    scrollController.animateTo(
-      targetPosition,
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.linear,
-    );
   }
 
   void startTimer() {

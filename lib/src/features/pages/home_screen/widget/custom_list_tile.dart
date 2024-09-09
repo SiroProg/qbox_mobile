@@ -32,7 +32,8 @@ class CustomListTile extends StatelessWidget {
             title,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              height: 1.3,
+              fontSize: 13,
+              height: 2,
             ),
           ),
           subtitle: subtitle == null
@@ -41,7 +42,7 @@ class CustomListTile extends StatelessWidget {
                   subtitle!,
                   style: const TextStyle(
                     height: 1.2,
-                    fontSize: 12,
+                    fontSize: 10,
                     color: AppColors.grey,
                   ),
                 ),

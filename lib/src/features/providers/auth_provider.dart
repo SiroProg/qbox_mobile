@@ -4,11 +4,10 @@ import '../../core/models/auth_models/employee_model.dart';
 import '../services/auth_service/auth_service.dart';
 import '../services/db_service/db_service.dart';
 
-
 class AuthProvider extends ChangeNotifier {
   late Employee user;
-  String login = 'sirozhiddin_nuriddinov';
-  String password = 'devsirozh2006';
+  String login = 'jahongir_rahmanshikov';
+  String password = '2020jahongir';
   String email = '';
   bool canResetPassword = false;
   bool isPasswordVisible = false;

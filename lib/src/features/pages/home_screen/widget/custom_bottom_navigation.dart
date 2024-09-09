@@ -6,29 +6,19 @@ class CustomBottomNavigation extends StatelessWidget {
   const CustomBottomNavigation({super.key});
 
   @override
-  Widget build(BuildContext context) => Consumer<HomeProvider>(
-        builder: (
-          BuildContext context,
-          HomeProvider provider,
-          Widget? child,
-        ) =>
-            BottomNavigationBar(
-          currentIndex: provider.selectedIndex,
-          onTap: (index) => provider.onItemTapped(index, context),
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Profile',
-            ),
-          ],
-        ),
-      );
+  Widget build(BuildContext context) {
+    final provider = Provider.of<HomeProvider>(context);
+
+    return BottomNavigationBar(
+      currentIndex: provider.selectedIndex,
+      onTap: (index) {
+        provider.onItemTapped(index);
+      },
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+        BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+      ],
+    );
+  }
 }

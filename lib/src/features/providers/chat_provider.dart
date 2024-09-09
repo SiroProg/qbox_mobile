@@ -1,28 +1,39 @@
+import 'package:qbox_mobile/src/core/models/operator_call/static_config/new_model/reason_model.dart';
 import 'package:qbox_mobile/src/features/services/operator_call_service/operator_api_service.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/call_user_model.dart';
+import 'package:qbox_mobile/src/core/models/operator_call/fast_message/fast_message_model.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/upload_model.dart';
 import 'package:qbox_mobile/src/features/pages/operator_screen/widget/call_screen.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/chat.dart';
 import '../../core/models/operator_call/static_config/new_model/static_model.dart';
+import 'package:qbox_mobile/src/core/models/operator_call/end_call_model.dart';
 import 'package:qbox_mobile/src/features/services/db_service/db_service.dart';
+import 'package:qbox_mobile/src/core/models/operator_call/folder_model.dart';
 import 'package:qbox_mobile/src/features/services/socket_service.dart';
 import 'package:qbox_mobile/src/core/constants/api_constants.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:qbox_mobile/src/core/utils/get_url_size.dart';
 import 'package:qbox_mobile/src/core/styles/app_audios.dart';
 import 'package:qbox_mobile/src/core/utils/file_picker.dart';
+import '../pages/operator_screen/operator_call_screen.dart';
 import 'package:qbox_mobile/src/core/utils/logger.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:qbox_mobile/src/core/app/app.dart';
 import 'package:flutter/material.dart';
-
-import '../pages/operator_screen/operator_call_screen.dart';
 
 class ChatProvider extends ChangeNotifier {
   String? chatId;
-  BuildContext? context;
+  // BuildContext? context;
   int messageCount = 0;
 
   StaticModel? staticModel;
+
+  List<ReasonModel> reasons = [];
+
+  EndCallModel endCallModel = EndCallModel();
+  String taskTypeTitle = '';
+
+  List<FolderModel> folders = [];
 
   bool isSwitched = false;
 
@@ -62,6 +73,18 @@ class ChatProvider extends ChangeNotifier {
     'Let me know how I can help you.',
   ];
 
+  List<FastMessageModel> fastMessage = [];
+
+  void settaskTypeTitle(String value) {
+    taskTypeTitle = value;
+    notifyListeners();
+  }
+
+  void setEndCallModel(EndCallModel value) {
+    endCallModel = value;
+    notifyListeners();
+  }
+
   void setSwitched(bool value) {
     isSwitched = value;
     notifyListeners();
@@ -78,7 +101,14 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setBuildContext(BuildContext context) => this.context = context;
+  void setFastMessageLang(int langId) async {
+    fastMessage.clear();
+    notifyListeners();
+    fastMessage = await OperatorService.getFastMessage(langId);
+    notifyListeners();
+  }
+
+  // void setBuildContext(BuildContext context) => this.context = context;
 
   void onUserCall(dynamic data) {
     callUserModel = CallUserModel.fromJson(data['caller']);
@@ -214,7 +244,7 @@ class ChatProvider extends ChangeNotifier {
     });
   }
 
-  void sendMessage() {
+  void sendMessage() async {
     if (message != null && message!.trim().isNotEmpty) {
       chatMessages.add(Chat(
         message: message!,
@@ -282,8 +312,7 @@ class ChatProvider extends ChangeNotifier {
       showNotification: true,
     );
 
-    Navigator.push(
-      context!,
+    navigatorKey.currentState?.push(
       MaterialPageRoute(
         builder: (context) => CallScreen(
           onAccept: () {
@@ -309,11 +338,43 @@ class ChatProvider extends ChangeNotifier {
         ),
       ),
     );
+
+    // Navigator.push(
+    //   context!,
+    //   MaterialPageRoute(
+    //     builder: (context) => CallScreen(
+    //       onAccept: () {
+    //         socketService.socket.emit("operator_accept");
+
+    //         _assetsAudioPlayer.stop();
+
+    //         Navigator.pushReplacement(
+    //           context,
+    //           MaterialPageRoute(
+    //             builder: (context) => const OperatorCallScreen(),
+    //           ),
+    //         );
+    //       },
+    //       onCancel: () {
+    //         socketService.socket.emit("operator_reject");
+    //         // socketService.socket.emit("operator_cancel");
+
+    //         _assetsAudioPlayer.stop();
+    //         Navigator.pop(context);
+    //         Navigator.pop(context);
+    //       },
+    //     ),
+    //   ),
+    // );
   }
 
   Future<void> initialize() async {
     staticModel = await OperatorService.getStaticConfig();
+    reasons = await OperatorService.getAllReasons();
+    folders = await OperatorService.getFolder();
+    fastMessage = await OperatorService.getFastMessage(1);
 
+    info(folders);
     await _localRenderer.initialize();
     await _remoteRenderer.initialize();
 
@@ -439,19 +500,68 @@ class ChatProvider extends ChangeNotifier {
     }
   }
 
-  void hangUp() {
-    socketService.socket.emit("message", {
-      "rtc": {"type": "hangup"}
-    });
-
+  void hangUp() async {
     chatMessages.clear();
-    _peerConnection?.close();
-    _localStream?.dispose();
-    _remoteStream?.dispose();
-    _localRenderer.dispose();
-    _remoteRenderer.dispose();
-    socketService.socket.dispose();
+
+    endCallModel = endCallModel.copyWith(
+      chat: chatId!,
+      clientSender: callUserModel!.userId,
+    );
+
+    // if (_peerConnection != null) {
+    //   final senders = await _peerConnection!.getSenders();
+    //   for (var sender in senders) {
+    //     if (sender.track?.kind == 'video') {
+    //       sender.track?.enabled = false; // Video oqimini o'chirib qo'yamiz
+    //       sender.track?.stop(); // Track'ni to'xtatamiz
+    //     }
+    //   }
+    //   _peerConnection!.close();
+    //   _peerConnection = null;
+    // }
+
+    socketService.socket.emit(
+      'operator_finish',
+      endCallModel.toJson(),
+    );
+
+    notifyListeners();
   }
+
+  // void hangUp() {
+  //   socketService.socket.emit("message", {
+  //     "rtc": {"type": "hangup"}
+  //   });
+
+  //   // Clear chat messages
+  //   chatMessages.clear();
+
+  //   // Close the peer connection if it exists
+  //   _peerConnection?.close();
+  //   _peerConnection = null;
+
+  //   // Dispose of the local and remote streams
+  //   _localStream?.getTracks().forEach((track) => track.stop());
+  //   _localStream?.dispose();
+  //   _localStream = null;
+
+  //   _remoteStream?.getTracks().forEach((track) => track.stop());
+  //   _remoteStream?.dispose();
+  //   _remoteStream = null;
+
+  //   // Dispose of the video renderers
+  //   _localRenderer.srcObject = null;
+  //   _localRenderer.dispose();
+
+  //   _remoteRenderer.srcObject = null;
+  //   _remoteRenderer.dispose();
+
+  //   // Dispose of the socket connection
+  //   socketService.socket.dispose();
+
+  //   // Notify listeners of the change
+  //   notifyListeners();
+  // }
 
   // void disableSocket() {
   //   if (operatorSocket.connected) {

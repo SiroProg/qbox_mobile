@@ -1,14 +1,43 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:qbox_mobile/src/core/styles/app_colors.dart';
 import 'package:qbox_mobile/src/features/pages/operator_screen/chat_screen.dart';
-import 'package:qbox_mobile/src/features/pages/operator_screen/widget/custom_bottom_app_bar.dart';
+import 'package:qbox_mobile/src/features/pages/operator_screen/create_task_bottom_sheet.dart';
+import 'package:qbox_mobile/src/features/pages/operator_screen/end_call_screen.dart';
 import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
-
+import 'package:badges/badges.dart' as badges;
 import 'package:provider/provider.dart';
 
-class OperatorCallScreen extends StatelessWidget {
+class OperatorCallScreen extends StatefulWidget {
   const OperatorCallScreen({super.key});
+
+  @override
+  State<OperatorCallScreen> createState() => _OperatorCallScreenState();
+}
+
+class _OperatorCallScreenState extends State<OperatorCallScreen> {
+  @override
+  void dispose() {
+    final chatProvider = Provider.of<ChatProvider>(context, listen: false);
+
+    chatProvider.localRenderer.dispose();
+    chatProvider.remoteRenderer.dispose();
+
+    super.dispose();
+  }
+
+  void delayFunction() async {
+    await Future.delayed(const Duration(seconds: 3), () {
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    delayFunction();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,127 +47,141 @@ class OperatorCallScreen extends StatelessWidget {
         ChatProvider chatProvider,
         Widget? child,
       ) =>
-          WillPopScope(
-        onWillPop: () => Future.value(true),
-        child: Scaffold(
-          appBar: AppBar(
-            leading: const SizedBox(),
-            title: const Text('Jahangir'),
-            centerTitle: true,
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.more_vert_sharp),
-              ),
-            ],
+          Scaffold(
+        appBar: AppBar(
+          leading: badges.Badge(
+            position: badges.BadgePosition.topEnd(top: 0, end: 0),
+            badgeContent: chatProvider.messageCount != 0
+                ? const Text(
+                    '',
+                    style: TextStyle(color: Colors.white),
+                  )
+                : null,
+            badgeStyle: badges.BadgeStyle(
+              badgeColor: chatProvider.messageCount != 0
+                  ? AppColors.red
+                  : Colors.transparent,
+            ),
+            child: IconButton(
+              onPressed: () async {
+                chatProvider.setMessageCount();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ChatScreen(),
+                  ),
+                );
+              },
+              icon: const Icon(CupertinoIcons.chat_bubble),
+            ),
           ),
-          body: LayoutBuilder(
-            builder: (context, constraints) {
-              return Stack(
-                children: [
-                  // Asosiy ekran (local yoki remote renderer)
-                  Positioned.fill(
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SizedBox(
-                        width: chatProvider.isSwitched
-                            ? chatProvider.localRenderer.videoWidth.toDouble()
-                            : chatProvider.remoteRenderer.videoWidth.toDouble(),
-                        height: chatProvider.isSwitched
-                            ? chatProvider.localRenderer.videoHeight.toDouble()
-                            : chatProvider.remoteRenderer.videoHeight
-                                .toDouble(),
-                        child: RTCVideoView(
-                          chatProvider.isSwitched
-                              ? chatProvider.localRenderer
-                              : chatProvider.remoteRenderer,
-                          mirror: true,
-                        ),
+          title: Text(
+              "${chatProvider.callUserModel!.firstName} ${chatProvider.callUserModel!.lastName}"),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  backgroundColor: AppColors.white,
+                  builder: (context) => const CreateTaskBottomSheet(),
+                );
+              },
+              icon: const Icon(Icons.add_box_outlined),
+            ),
+          ],
+        ),
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: SizedBox(
+                      width: chatProvider.isSwitched
+                          ? chatProvider.localRenderer.videoWidth.toDouble()
+                          : chatProvider.remoteRenderer.videoWidth.toDouble(),
+                      height: chatProvider.isSwitched
+                          ? chatProvider.localRenderer.videoHeight.toDouble()
+                          : chatProvider.remoteRenderer.videoHeight.toDouble(),
+                      child: RTCVideoView(
+                        chatProvider.isSwitched
+                            ? chatProvider.localRenderer
+                            : chatProvider.remoteRenderer,
+                        mirror: true,
                       ),
                     ),
                   ),
-                  // Kichik ekran (local yoki remote renderer)
-                  Positioned(
-                    left: chatProvider.widgetPosition.dx,
-                    top: chatProvider.widgetPosition.dy,
-                    child: Draggable(
-                      feedback: buildDraggableChild(chatProvider),
-                      childWhenDragging: buildDraggableChild(chatProvider),
-                      onDragEnd: (details) {
-                        final newPosition = getNewPosition(
-                          details.offset,
-                          constraints.maxWidth,
-                          constraints.maxHeight,
-                          120,
-                          200,
-                        );
-                        chatProvider.updateWidgetPosition(newPosition);
-                      },
-                      child: GestureDetector(
-                        onTap: () =>
-                            chatProvider.setSwitched(!chatProvider.isSwitched),
-                        child: buildDraggableChild(chatProvider),
-                      ),
+                ),
+                Positioned(
+                  left: chatProvider.widgetPosition.dx,
+                  top: chatProvider.widgetPosition.dy,
+                  child: Draggable(
+                    feedback: buildDraggableChild(chatProvider),
+                    childWhenDragging: buildDraggableChild(chatProvider),
+                    onDragEnd: (details) {
+                      final newPosition = getNewPosition(
+                        details.offset,
+                        constraints.maxWidth,
+                        constraints.maxHeight,
+                        120,
+                        200,
+                      );
+                      chatProvider.updateWidgetPosition(newPosition);
+                    },
+                    child: GestureDetector(
+                      onTap: () =>
+                          chatProvider.setSwitched(!chatProvider.isSwitched),
+                      child: buildDraggableChild(chatProvider),
                     ),
                   ),
-                ],
-              );
-            },
-          ),
-          bottomNavigationBar: BottomAppBar(
+                ),
+              ],
+            );
+          },
+        ),
+        bottomNavigationBar: BottomAppBar(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                IconButton(
-                  onPressed: () => chatProvider.toggleVideo(),
-                  icon: Icon(
-                    chatProvider.localStream?.getVideoTracks().first.enabled ??
-                            false
-                        ? Icons.videocam
-                        : Icons.videocam_off,
-                  ),
+                CustomIconButton(
+                  icon: chatProvider.localStream
+                              ?.getVideoTracks()
+                              .first
+                              .enabled ??
+                          false
+                      ? CupertinoIcons.videocam
+                      : Icons.videocam_off,
+                  onTap: () => chatProvider.toggleVideo(),
                 ),
-                IconButton(
-                  onPressed: () => chatProvider.toggleAudio(),
-                  icon: Icon(
-                    chatProvider.localStream?.getAudioTracks().first.enabled ??
-                            false
-                        ? Icons.mic
-                        : Icons.mic_off,
-                  ),
+                CustomIconButton(
+                  icon: chatProvider.localStream
+                              ?.getAudioTracks()
+                              .first
+                              .enabled ??
+                          false
+                      ? CupertinoIcons.mic
+                      : CupertinoIcons.mic_off,
+                  onTap: () => chatProvider.toggleAudio(),
                 ),
-                IconButton(
-                  onPressed: () => chatProvider.switchCamera(),
-                  icon: const Icon(Icons.switch_camera),
+                CustomIconButton(
+                  icon: CupertinoIcons.switch_camera,
+                  onTap: () => chatProvider.switchCamera(),
                 ),
-                IconButton(
-                  onPressed: () {
+                CustomIconButton(
+                  onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const ChatScreen(),
+                      CupertinoPageRoute(
+                        builder: (context) => const EndCallScreen(),
                       ),
                     );
                   },
-                  icon: const Icon(Icons.message_outlined),
-                ),
-                FloatingActionButton(
-                  backgroundColor: AppColors.red,
-                  onPressed: () {
-                    // showModalBottomSheet(
-                    //   context: context,
-                    //   builder: (context) => const EndCallBottomSheet(),
-                    // );
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-                  },
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: const Icon(
-                    Icons.call_end,
-                    color: Colors.white,
-                  ),
+                  icon: CupertinoIcons.phone,
+                  color: AppColors.red,
                 ),
               ],
             ),
@@ -184,6 +227,38 @@ class OperatorCallScreen extends StatelessWidget {
     final double y =
         dragOffset.dy < maxHeight / 2 ? 0 : maxHeight - widgetHeight;
     return Offset(x, y);
+  }
+}
+
+class CustomIconButton extends StatelessWidget {
+  const CustomIconButton({
+    required this.onTap,
+    required this.icon,
+    this.color,
+    super.key,
+  });
+
+  final VoidCallback onTap;
+  final IconData icon;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton.filled(
+      constraints: const BoxConstraints(
+        minWidth: 60,
+        minHeight: 60,
+      ),
+      iconSize: 30,
+      splashRadius: 50,
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(
+          color ?? AppColors.grey.withOpacity(0.4),
+        ),
+      ),
+      onPressed: onTap,
+      icon: Icon(icon),
+    );
   }
 }
 
@@ -485,3 +560,4 @@ class OperatorCallScreen extends StatelessWidget {
 //     super.dispose();
 //   }
 // }
+

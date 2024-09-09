@@ -59,10 +59,8 @@ class ConfigModel {
           (k, e) => MapEntry(k, MailboxModel.fromJson(e)),
         ),
         postProcessing: PostProcessingModel.fromJson(json['post-processing']),
-        moods: (json['moods'] as List)
-                .map((e) => MoodModel.fromJson(e))
-                .toList() ??
-            [],
+        moods:
+            (json['moods'] as List).map((e) => MoodModel.fromJson(e)).toList(),
         rmoAppealReasons: (json['rmo_appeal_reasons'] as List)
             .map((e) => RmoAppealReasonModel.fromJson(e))
             .toList(),

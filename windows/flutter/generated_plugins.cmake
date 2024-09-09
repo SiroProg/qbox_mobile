@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   flutter_webrtc
+  local_auth_windows
   url_launcher_windows
 )
 

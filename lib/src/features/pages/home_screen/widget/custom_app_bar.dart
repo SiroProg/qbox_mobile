@@ -50,6 +50,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     switch (value) {
       case 'Profile':
         // Handle Profile action
+
         break;
       case 'Notifications':
         // Handle Notifications action

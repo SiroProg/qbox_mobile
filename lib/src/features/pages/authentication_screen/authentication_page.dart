@@ -16,11 +16,6 @@ class AuthenticationPage extends StatefulWidget {
 
 class _AuthenticationPageState extends State<AuthenticationPage> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<AuthProvider>(context);
     return Scaffold(
@@ -54,7 +49,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             ),
           ),
           Positioned(
-            top:10,
+            top: 10,
             right: 30,
             child: SafeArea(
               child: PopupMenuButton<String>(

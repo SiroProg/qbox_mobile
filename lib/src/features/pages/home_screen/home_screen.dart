@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:qbox_mobile/src/features/pages/contact_centre/contact_center_screen.dart';
-import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_app_bar.dart';
-import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_bottom_navigation.dart';
 import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_list_tile.dart';
 import 'package:qbox_mobile/src/features/services/socket_service.dart';
 
@@ -18,11 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    socketService.initSocket(context);
-
     actions = {
       'Contact Center': () {
-        // print('Navigating to Contact Center');
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -34,10 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // print('Navigating to Tickets');
         // Handle Tickets action
       },
-      'Sales': () {
-        // print('Navigating to Sales');
-        // Handle Sales action
-      },
+      'Sales': () {},
       'Marketing': () {
         // print('Navigating to Marketing');
         // Handle Marketing action
@@ -139,33 +131,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 16.0,
-            mainAxisSpacing: 16.0,
-            childAspectRatio: 3 / 2,
-          ),
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            final item = items[index];
-            return CustomListTile(
-              icon: item['icon'] as IconData,
-              title: item['title'] as String,
-              subtitle: item['subtitle'] as String,
-              onTap: () {
-                final action = actions[item['title'] as String];
-                if (action != null) action();
-              },
-            );
-          },
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16.0,
+          mainAxisSpacing: 16.0,
+          childAspectRatio: 3 / 1.5,
         ),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          final item = items[index];
+          return CustomListTile(
+            icon: item['icon'] as IconData,
+            title: item['title'] as String,
+            subtitle: item['subtitle'] as String,
+            onTap: () {
+              final action = actions[item['title'] as String];
+              if (action != null) action();
+            },
+          );
+        },
       ),
-      bottomNavigationBar: const CustomBottomNavigation(),
     );
   }
 }

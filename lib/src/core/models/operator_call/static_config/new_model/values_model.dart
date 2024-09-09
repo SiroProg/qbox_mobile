@@ -2,9 +2,9 @@ class ValuesModel {
   const ValuesModel({
     required this.id,
     required this.title,
-    required this.titleKk,
-    required this.titleRu,
-    required this.titleEn,
+    this.titleKk,
+    this.titleRu,
+    this.titleEn,
   });
 
   final int id;
@@ -15,7 +15,7 @@ class ValuesModel {
 
   factory ValuesModel.fromJson(Map<String, Object?> json) => ValuesModel(
         id: json['id'] as int,
-        title: json['title'] as String,
+        title: json['title'] as String? ?? 'null',
         titleKk: json['title_kk'] as String?,
         titleRu: json['title_ru'] as String?,
         titleEn: json['title_en'] as String?,

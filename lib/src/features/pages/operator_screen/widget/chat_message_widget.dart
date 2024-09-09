@@ -65,7 +65,7 @@ class ChatMessageWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            message.message,
+            message.message.trim(),
             style: TextStyle(
               color: isMyMessage ? Colors.white : Colors.black,
             ),

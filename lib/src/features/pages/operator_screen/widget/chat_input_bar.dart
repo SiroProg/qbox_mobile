@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qbox_mobile/src/core/styles/app_colors.dart';
 import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
 
-import 'custom_bottom_sheet.dart';
+import 'fast_message_bottom_sheet.dart';
 import 'custom_icon_button.dart';
 
 class ChatInputBar extends StatelessWidget {
@@ -24,6 +24,7 @@ class ChatInputBar extends StatelessWidget {
           CustomIconButton(
             onPressed: () => showModalBottomSheet(
               context: context,
+              backgroundColor: AppColors.white,
               builder: (context) => const CustomBottomSheet(),
             ),
             icon: Icons.menu,

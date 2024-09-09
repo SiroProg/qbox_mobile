@@ -9,7 +9,7 @@ class MailboxModel {
 
   factory MailboxModel.fromJson(Map<String, Object?> json) => MailboxModel(
         mail: json['mail'] as String? ?? 'null',
-        title: json['title'] as String? ?? 'null',
+        title: json['title'] as String? ?? '',
       );
 
   Map<String, Object?> toJson() => <String, Object?>{

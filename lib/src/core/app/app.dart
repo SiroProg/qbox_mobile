@@ -1,14 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
-import 'package:qbox_mobile/src/features/providers/employees_provider.dart';
-import 'package:qbox_mobile/src/features/providers/home_provider.dart';
-
 import '../../features/pages/authentication_screen/authentication_page.dart';
-import '../../features/providers/auth_provider.dart';
+import 'package:qbox_mobile/src/features/providers/employees_provider.dart';
+import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
+import 'package:qbox_mobile/src/features/providers/home_provider.dart';
 import '../../features/providers/control_panel_provider.dart';
 import '../../features/providers/profile_provider.dart';
+import '../../features/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 import '../styles/app_colors.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -25,8 +26,9 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ChatProvider()),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-        title: 'Task 1',
+        title: 'Qbox mobile',
         theme: ThemeData(
           primaryColor: AppColors.blue,
           scaffoldBackgroundColor: AppColors.white,
@@ -38,6 +40,10 @@ class App extends StatelessWidget {
             backgroundColor: AppColors.white,
             selectedItemColor: AppColors.blue,
             unselectedItemColor: AppColors.grey,
+          ),
+          bottomAppBarTheme: const BottomAppBarTheme(
+            color: Colors.transparent,
+            elevation: 0,
           ),
           fontFamily: 'Oxygen',
         ),

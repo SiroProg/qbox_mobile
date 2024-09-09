@@ -1,4 +1,4 @@
-import 'package:qbox_mobile/src/features/pages/home_screen/home_screen.dart';
+import 'package:qbox_mobile/src/features/pages/home_screen/home_control.dart';
 import '../../../../core/styles/app_colors.dart';
 import '../../../providers/auth_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -143,7 +143,7 @@ class SignInForm extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
+                              builder: (context) => const HomeControl(),
                             ),
                           );
                         }

@@ -33,7 +33,9 @@ class Chat {
       size.hashCode;
 
   @override
-  String toString() {
-    return 'Chat(message: $message, senderToken: $senderToken, time: $time, fileName: $fileName, size: $size)';
-  }
+  String toString() => 'Chat(message: $message,'
+      'senderToken: $senderToken,'
+      'time: $time,'
+      'fileName: $fileName,'
+      'size: $size)';
 }

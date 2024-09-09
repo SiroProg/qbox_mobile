@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qbox_mobile/src/features/pages/control_panel_screen/control_panel_screen.dart';
+import 'package:qbox_mobile/src/features/pages/employess/employees_screen.dart';
 import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_app_bar.dart';
 import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_bottom_navigation.dart';
 import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_list_tile.dart';
@@ -48,7 +49,14 @@ class _CallsScreenState extends State<CallsScreen> {
           );
         }
       },
-      'Live chat': () {},
+      'Live chat': () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const EmployeesScreen(),
+          ),
+        );
+      },
       'Live chat 2.0': () {},
       'Domains': () {},
       'Queues': () {},

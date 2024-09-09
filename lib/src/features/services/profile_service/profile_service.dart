@@ -139,12 +139,12 @@ class ProfileService {
 
   Future<EmployeeByIdModel> fetchEmployeeById(int id) async {
     try {
-      final response = await _dio.get('/api/staff/employees/$id',
-          queryParameters: {
-            'Content-Type': 'application/json',
-            'action': 'main',
-            'token': DBService.token
-          });
+      final response =
+          await _dio.get('/api/staff/employees/$id', queryParameters: {
+        'Content-Type': 'application/json',
+        'action': 'main',
+        'token': DBService.token,
+      });
       print(DBService.token);
       if (response.statusCode == 200 && response.data['_success']) {
         final data = response.data['data']['employee'];

@@ -26,7 +26,6 @@ class SocketService {
     });
 
     socket.on("operator_status", (data) {
-
       info('Socket -> operator_status: $data');
     });
 
@@ -71,7 +70,6 @@ class SocketService {
     socket.disconnect();
     info('Socket -> dispose');
   }
-
 }
 
 SocketService socketService = SocketService();

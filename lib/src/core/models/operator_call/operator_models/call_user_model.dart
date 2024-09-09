@@ -1,5 +1,5 @@
 class CallUserModel {
-  const CallUserModel({
+  CallUserModel({
     required this.channel,
     required this.queue,
     required this.userId,
@@ -9,17 +9,19 @@ class CallUserModel {
     required this.iin,
     required this.phone,
     required this.lang,
+    required this.email,
   });
 
-  final String channel;
-  final String queue;
-  final String userId;
-  final String firstName;
-  final String lastName;
-  final String? photo;
-  final String? iin;
-  final String? phone;
-  final String lang;
+  String channel;
+  String queue;
+  String userId;
+  String firstName;
+  String lastName;
+  String? photo;
+  String? iin;
+  String? phone;
+  String lang;
+  String? email;
 
   factory CallUserModel.fromJson(Map<String, dynamic> json) {
     final extra = json['extra'] ?? {};
@@ -33,6 +35,7 @@ class CallUserModel {
       iin: extra['iin'] as String?,
       phone: extra['phone'] as String?,
       lang: json['lang'] as String? ?? '',
+      email: json['email'] as String?,
     );
   }
   @override
@@ -60,19 +63,20 @@ class CallUserModel {
       photo.hashCode ^
       iin.hashCode ^
       phone.hashCode ^
-      lang.hashCode;
+      lang.hashCode ^
+      email.hashCode;
 
-  CallUserModel copyWith({
-    String? channel,
-    String? queue,
-    String? userId,
-    String? firstName,
-    String? lastName,
-    String? photo,
-    String? iin,
-    String? phone,
-    String? lang,
-  }) =>
+  CallUserModel copyWith(
+          {String? channel,
+          String? queue,
+          String? userId,
+          String? firstName,
+          String? lastName,
+          String? photo,
+          String? iin,
+          String? phone,
+          String? lang,
+          String? email}) =>
       CallUserModel(
         channel: channel ?? this.channel,
         queue: queue ?? this.queue,
@@ -83,6 +87,7 @@ class CallUserModel {
         iin: iin ?? this.iin,
         phone: phone ?? this.phone,
         lang: lang ?? this.lang,
+        email: email ?? this.lang,
       );
 
   @override
@@ -95,5 +100,6 @@ class CallUserModel {
       'photo: $photo,'
       'iin: $iin,'
       'phone: $phone'
-      'lang: $lang)';
+      'lang: $lang,'
+      'email: $email)';
 }

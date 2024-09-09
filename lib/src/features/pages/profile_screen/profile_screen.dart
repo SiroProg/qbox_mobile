@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qbox_mobile/src/core/utils/logger.dart';
-import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_app_bar.dart';
-import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_bottom_navigation.dart';
 import 'package:qbox_mobile/src/features/services/profile_service/profile_service.dart';
 import '../../../core/constants/api_constants.dart';
 import '../../../core/models/profile_models/calls_model.dart';
@@ -60,8 +58,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
-      backgroundColor: AppColors.white,
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : SizedBox(
@@ -278,7 +274,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-      bottomNavigationBar: const CustomBottomNavigation(),
     );
   }
 
