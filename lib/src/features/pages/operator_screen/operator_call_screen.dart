@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:qbox_mobile/src/core/styles/app_colors.dart';
 import 'package:qbox_mobile/src/features/pages/operator_screen/chat_screen.dart';
-import 'package:qbox_mobile/src/features/pages/operator_screen/create_task_bottom_sheet.dart';
 import 'package:qbox_mobile/src/features/pages/operator_screen/end_call_screen.dart';
+import 'package:qbox_mobile/src/features/pages/operator_screen/menu_bottom_sheet.dart';
 import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:provider/provider.dart';
@@ -28,7 +28,7 @@ class _OperatorCallScreenState extends State<OperatorCallScreen> {
   }
 
   void delayFunction() async {
-    await Future.delayed(const Duration(seconds: 3), () {
+    await Future.delayed(const Duration(seconds: 2), () {
       setState(() {});
     });
   }
@@ -84,10 +84,10 @@ class _OperatorCallScreenState extends State<OperatorCallScreen> {
                 showModalBottomSheet(
                   context: context,
                   backgroundColor: AppColors.white,
-                  builder: (context) => const CreateTaskBottomSheet(),
+                  builder: (context) => const MenuBottomSheet(),
                 );
               },
-              icon: const Icon(Icons.add_box_outlined),
+              icon: const Icon(Icons.more_vert_rounded),
             ),
           ],
         ),

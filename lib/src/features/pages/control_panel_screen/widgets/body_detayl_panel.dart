@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:qbox_mobile/src/core/styles/app_svg.dart';
 
 import '../../../../core/styles/app_colors.dart';
 import '../../../providers/control_panel_provider.dart';
@@ -147,7 +144,7 @@ class BodyDetaylPanel extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Входящие',
                     style: TextStyle(
@@ -175,7 +172,7 @@ class BodyDetaylPanel extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Пропущенные',
                     style: TextStyle(
@@ -203,7 +200,7 @@ class BodyDetaylPanel extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Задачи',
                     style: TextStyle(

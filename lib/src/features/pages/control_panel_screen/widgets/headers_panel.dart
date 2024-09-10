@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:qbox_mobile/src/core/styles/app_svg.dart';
 
 import '../../../../core/constants/api_constants.dart';
 import '../../../../core/models/control_panel_models/status_model.dart';
@@ -365,7 +364,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
               height: 80,
               child: DecoratedBox(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(10),
                   ),
                   image: panelProvider.employee.photo != null
@@ -381,8 +380,9 @@ class _HeadersPanelState extends State<HeadersPanel> {
                 child: panelProvider.employee.photo == null
                     ? Center(
                         child: Text(
-                          "${panelProvider.employee.firstName[0] + panelProvider.employee.lastName[0]}",
-                          style: TextStyle(color: AppColors.black10),
+                          panelProvider.employee.firstName[0] +
+                              panelProvider.employee.lastName[0],
+                          style: const TextStyle(color: AppColors.black10),
                         ),
                       )
                     : null,
@@ -393,11 +393,11 @@ class _HeadersPanelState extends State<HeadersPanel> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Text(
-                  "${panelProvider.employee.firstName ?? ""} ${panelProvider.employee.lastName ?? ""}",
+                  "${panelProvider.employee.firstName} ${panelProvider.employee.lastName}",
                   style: const TextStyle(
                     color: AppColors.black,
                     fontSize: 18,
@@ -420,7 +420,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                         showBottomSheet(
                           context: context,
                           builder: (context) => CupertinoActionSheet(
-                            title: Text('Выберите статус'),
+                            title: const Text('Выберите статус'),
                             actions: List.generate(
                                 panelProvider.statuses.where((index) {
                                   return index.details.show;
@@ -471,7 +471,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                                 panelProvider.stopStopwatch();
                                 Navigator.pop(context);
                               },
-                              child: Text('Отмена'),
+                              child: const Text('Отмена'),
                             ),
                           ),
                         );
@@ -479,7 +479,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                       child: SizedBox(
                         child: DecoratedBox(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(10),
                             ),
                             border: Border.all(
@@ -524,11 +524,11 @@ class _HeadersPanelState extends State<HeadersPanel> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                     SizedBox(
                       child: DecoratedBox(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                             Radius.circular(10),
                           ),
                           border: Border.all(
@@ -555,7 +555,7 @@ class _HeadersPanelState extends State<HeadersPanel> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
               ],
             ),
           ],
@@ -575,9 +575,8 @@ class HeadersPanel1 extends StatefulWidget {
 class _HeadersPanel1State extends State<HeadersPanel1> {
   @override
   Widget build(BuildContext context) {
-    final panelProvider = Provider.of<ControlPanelProvider>(context);
-    return Padding(
-      padding: const EdgeInsets.only(top: 10),
+    return const Padding(
+      padding: EdgeInsets.only(top: 10),
     );
   }
 }

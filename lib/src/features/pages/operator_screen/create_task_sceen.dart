@@ -11,7 +11,7 @@ import 'package:qbox_mobile/src/core/utils/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import 'succes_dialog.dart';
+import 'success_dialog.dart';
 
 class CreateTaskScreen extends StatefulWidget {
   const CreateTaskScreen({

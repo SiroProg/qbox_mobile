@@ -12,9 +12,7 @@ import '../../../core/styles/app_svg.dart';
 import '../../providers/control_panel_provider.dart';
 import '../../services/control_panel_service/control_panel_service.dart';
 import '../../services/socket_service.dart';
-import 'widgets/body_detayl_panel.dart';
 import 'widgets/body_pageview_panel.dart';
-import 'widgets/headers_panel.dart';
 
 class VideoScreen extends StatefulWidget {
   final Employee employee;
@@ -223,7 +221,7 @@ class _VideoScreenState extends State<VideoScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${panelProvider.employee.firstName ?? ""} ${panelProvider.employee.lastName ?? ""}",
+                        "${panelProvider.employee.firstName} ${panelProvider.employee.lastName}",
                         style: const TextStyle(
                           color: AppColors.black,
                           fontSize: 18,

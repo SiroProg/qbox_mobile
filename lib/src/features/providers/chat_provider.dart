@@ -330,7 +330,7 @@ class ChatProvider extends ChangeNotifier {
           onCancel: () {
             socketService.socket.emit("operator_reject");
             // socketService.socket.emit("operator_cancel");
-
+            callUserModel = null;
             _assetsAudioPlayer.stop();
             Navigator.pop(context);
             Navigator.pop(context);
@@ -524,6 +524,7 @@ class ChatProvider extends ChangeNotifier {
       'operator_finish',
       endCallModel.toJson(),
     );
+    callUserModel = null;
 
     notifyListeners();
   }
