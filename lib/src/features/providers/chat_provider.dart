@@ -5,6 +5,7 @@ import 'package:qbox_mobile/src/core/models/operator_call/fast_message/fast_mess
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/upload_model.dart';
 import 'package:qbox_mobile/src/features/pages/operator_screen/widget/call_screen.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/chat.dart';
+import '../../core/models/operator_call/redirect_models/redirect_model.dart';
 import '../../core/models/operator_call/static_config/new_model/static_model.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/end_call_model.dart';
 import 'package:qbox_mobile/src/features/services/db_service/db_service.dart';
@@ -22,6 +23,9 @@ import 'package:qbox_mobile/src/core/app/app.dart';
 import 'package:flutter/material.dart';
 
 class ChatProvider extends ChangeNotifier {
+  late RedirectModel redirectOperator;
+
+  // _________________________
   String? chatId;
   // BuildContext? context;
   int messageCount = 0;

@@ -66,6 +66,21 @@ class SocketService {
     socket.emit("operator_status", {'status': status});
   }
 
+  void redirectOperator({
+    required String toOperator,
+    required String targetOperator,
+    required String chatId,
+  }) {
+    socket.emit('operator_redirect', {
+      'to': toOperator,
+      'target': targetOperator,
+      'chat': chatId,
+    });
+
+    info(
+        'Redirecting operator: from $toOperator to $targetOperator with chat ID: $chatId');
+  }
+
   void dispose() {
     socket.disconnect();
     info('Socket -> dispose');

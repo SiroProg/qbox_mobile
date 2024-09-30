@@ -6,8 +6,8 @@ import '../services/db_service/db_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   late Employee user;
-  String login = 'jahongir_rahmanshikov';
-  String password = '2020jahongir';
+  String login = 'sirozhiddin_nuriddinov';
+  String password = 'devsirozh2006';
   String email = '';
   bool canResetPassword = false;
   bool isPasswordVisible = false;

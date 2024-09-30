@@ -45,7 +45,6 @@ class App extends StatelessWidget {
             color: Colors.transparent,
             elevation: 0,
           ),
-          fontFamily: 'Oxygen',
         ),
         home: const AuthenticationPage(),
       ),

@@ -187,10 +187,12 @@ class IncomingCallsPanel extends StatelessWidget {
                           children: [
                             Text(
                               panelProvider.getFormattedDateTime(
-                                  panelProvider.conversations[index].startedAt),
+                                panelProvider.conversations[index].startedAt,
+                              ),
                               style: const TextStyle(
                                 color: AppColors.black10,
-                                fontSize: 14,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w300,
                               ),
                             ),
                             Row(
@@ -199,7 +201,8 @@ class IncomingCallsPanel extends StatelessWidget {
                                   'Неизвестный клиент',
                                   style: TextStyle(
                                     color: AppColors.black,
-                                    fontSize: 16,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 const SizedBox(width: 10),
@@ -215,7 +218,7 @@ class IncomingCallsPanel extends StatelessWidget {
                                       .toString(),
                                   style: const TextStyle(
                                     color: AppColors.black,
-                                    fontSize: 15,
+                                    fontSize: 14,
                                   ),
                                 ),
                               ],
@@ -223,8 +226,11 @@ class IncomingCallsPanel extends StatelessWidget {
                             const SizedBox(height: 5),
                             Row(
                               children: [
-                                SvgPicture.string(AppSvg.incomingCall,
-                                    width: 18, height: 18),
+                                SvgPicture.string(
+                                  AppSvg.incomingCall,
+                                  width: 19,
+                                  height: 19,
+                                ),
                                 const SizedBox(width: 10),
                                 const Text(
                                   'Принято',
@@ -351,8 +357,74 @@ class CreatedTasksPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Созданных задач нет'),
-    );
+    final panelProvider = Provider.of<ControlPanelProvider>(context);
+    return (panelProvider.taskModel?.data?.tickets!.isEmpty ?? true)
+        ? Center(
+            child: Text('Созданных задач нет'),
+          )
+        : SafeArea(
+            child: ListView.builder(
+              itemCount: panelProvider.taskModel?.data?.tickets?.length,
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Card(
+                      color: AppColors.white,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 20,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  panelProvider.getFormattedDateTime(
+                                    panelProvider.taskModel!.data!
+                                        .tickets![index].datetime!
+                                        .toInt(),
+                                  ),
+                                  style: TextStyle(
+                                    color: AppColors.black10,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(panelProvider
+                                    .taskModel?.data!.tickets![index].title ??
+                                ''),
+                            SizedBox(
+                              width: 100,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                  border: Border.all(
+                                    color: AppColors.black10,
+                                    width: 0.5,
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    SvgPicture.string(AppSvg.sheduled)
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
   }
 }

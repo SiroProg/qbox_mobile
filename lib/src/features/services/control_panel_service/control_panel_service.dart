@@ -6,6 +6,7 @@ import '../../../core/models/control_panel_models/call_team_model.dart';
 import '../../../core/models/control_panel_models/missed_calls_model.dart';
 import '../../../core/models/control_panel_models/perfomens_model.dart';
 import '../../../core/models/control_panel_models/status_model.dart';
+import '../../../core/models/control_panel_models/task_model.dart';
 import '../../../core/models/control_panel_models/сonversation_model.dart';
 import '../../../core/utils/logger.dart';
 import '../db_service/db_service.dart';
@@ -18,6 +19,40 @@ class ControlPanelService {
       followRedirects: true,
       maxRedirects: 5,
     );
+
+  static Future<TaskModel?> fetchTaskModel() async {
+    String interval =
+        '${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}..${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}';
+
+    String url = '/api/hdesk/tickets';
+
+    try {
+      final response = await _dio.get(
+        url,
+        queryParameters: {
+          'token': DBService.token,
+          'author_ids': DBService.id,
+          'interval': interval,
+          'page': 1,
+          'limit': 10,
+        },
+      );
+
+      // Проверяем успешность запроса
+      if (response.statusCode == 200 && response.data['_success']) {
+        // Преобразуем полученные данные в TaskModel
+        print('GOOOOOOOOOOOOOOOOOOOOOOOOO');
+        return TaskModel.fromJson(response.data);
+      } else {
+        // Обработка ошибки, если статус код не 200
+        throw Exception('Ошибка загрузки данных: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Обработка исключений и логирование ошибок
+      print('Ошибка: $e');
+      return null;
+    }
+  }
 
   Future<CallTeamModel> fetchCallTeams() async {
     try {
@@ -108,7 +143,6 @@ class ControlPanelService {
     try {
       final response = await _dio.get(
         '/api/calls/workspace/conversations',
-
         queryParameters: {
           'interval': interval,
           'operator_id': operatorId,

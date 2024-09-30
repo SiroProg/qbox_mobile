@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:qbox_mobile/src/core/models/profile_models/employee_by_id_model.dart';
 import '../../../../../core/constants/api_constants.dart';
 import '../../../../../core/models/profile_models/log_model.dart';
 import '../../../../../core/styles/app_colors.dart';
@@ -8,8 +8,10 @@ import '../../../../providers/profile_provider.dart';
 import '../../../../services/profile_service/profile_service.dart';
 
 class ProfileLogs extends StatefulWidget {
+  final EmployeeByIdModel employee;
   const ProfileLogs({
     super.key,
+    required this.employee,
   });
 
   @override
@@ -45,7 +47,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
 
   void _loadLogs() async {
     ProfileService apiService = ProfileService();
-    _allLogs = await apiService.fetchAuditData(date);
+    _allLogs = await apiService.fetchAuditData(date, widget.employee.id ?? 0);
     setState(() {});
   }
 
@@ -62,42 +64,35 @@ class _ProfileLogsState extends State<ProfileLogs> {
 
   void _showPopupMenu(BuildContext context) {
     showModalBottomSheet(
+      backgroundColor: AppColors.white,
       context: context,
-      isScrollControlled: true,
+      isScrollControlled: false,
       builder: (BuildContext context) {
-        return SizedBox(
-          width: double.infinity,
-          height: 500,
-          child: DraggableScrollableSheet(
-            initialChildSize: 0.5,
-            minChildSize: 0.3,
-            maxChildSize: 0.8,
-            builder: (BuildContext context, ScrollController scrollController) {
-              return ListView.builder(
-                controller: scrollController,
-                itemCount: _allEvents.length,
-                itemBuilder: (context, index) {
-                  String key = _allEvents.keys.elementAt(index);
-                  List actions = _allEvents[key];
-                  return ExpansionTile(
-                    title: Text(key),
-                    children: actions
-                        .map(
-                          (actionIndex) => ListTile(
-                            title: Text(_allActions[actionIndex]),
-                            onTap: () {
-                              print(
-                                  'Selected from $key: ${_allActions[actionIndex]}');
-                              Navigator.pop(context);
-                            },
-                          ),
-                        )
-                        .toList(),
-                  );
-                },
-              );
-            },
-          ),
+        return DraggableScrollableSheet(
+          initialChildSize: 0.5,
+          minChildSize: 0.3,
+          maxChildSize: 0.8,
+          builder: (BuildContext context, ScrollController scrollController) {
+            return ListView.builder(
+              controller: scrollController,
+              itemCount: _allEvents.length,
+              itemBuilder: (context, index) {
+                String key = _allEvents.keys.elementAt(index);
+                List actions = _allEvents[key];
+                return ExpansionTile(
+                  title: Text(key),
+                  children: actions.map((actionIndex) {
+                    return ListTile(
+                      title: Text(_allActions[actionIndex]),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                    );
+                  }).toList(),
+                );
+              },
+            );
+          },
         );
       },
     );
@@ -110,32 +105,46 @@ class _ProfileLogsState extends State<ProfileLogs> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
+        centerTitle: true,
+        title: Text(
+          "Логи",
+          style: TextStyle(
+            color: AppColors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         leading: const BackButton(
           color: AppColors.black,
+          style: ButtonStyle(
+            iconSize: WidgetStatePropertyAll(20),
+          ),
         ),
       ),
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.lightDark95,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Логи",
-                style: TextStyle(
-                  color: AppColors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w600,
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 5, bottom: 5),
+                child: Text(
+                  'Дата',
+                  style: TextStyle(
+                    color: AppColors.black10,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
-              const SizedBox(height: 10),
               SizedBox(
                 width: double.infinity,
                 child: DecoratedBox(
                   decoration: BoxDecoration(
+                    color: AppColors.white,
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    border: Border.all(color: AppColors.lightDark85, width: 1),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -148,65 +157,72 @@ class _ProfileLogsState extends State<ProfileLogs> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              "Дата",
-                              style: TextStyle(
-                                color: AppColors.black10,
-                                fontSize: 18,
-                              ),
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: ContinuousRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: ContinuousRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  elevation: 0,
+                                  backgroundColor: AppColors.white,
+                                  side: BorderSide(
+                                    color: AppColors.lightDark90,
+                                  ),
                                 ),
-                                elevation: 0,
-                              ),
-                              onPressed: () async {
-                                final selectedDate = await onDateSelected();
-                                if (selectedDate != null) {
-                                  date = selectedDate
+                                onPressed: () async {
+                                  final selectedDate = await onDateSelected();
+                                  if (selectedDate != null) {
+                                    date = selectedDate
+                                        .toIso8601String()
+                                        .substring(0, 10);
+                                    profileProvider
+                                        .setSelectedDateFromLogs(selectedDate);
+                                    _loadLogs();
+                                  }
+                                },
+                                child: Text(
+                                  profileProvider.selectedDateFromLogs
                                       .toIso8601String()
-                                      .substring(0, 10);
-                                  profileProvider
-                                      .setSelectedDateFromLogs(selectedDate);
-                                  _loadLogs();
-                                }
-                              },
-                              child: Text(
-                                profileProvider.selectedDateFromLogs
-                                    .toIso8601String()
-                                    .substring(0, 10),
-                                style: const TextStyle(
-                                  color: AppColors.black10,
-                                  fontSize: 18,
+                                      .substring(0, 10),
+                                  style: const TextStyle(
+                                    color: AppColors.black10,
+                                    fontSize: 13,
+                                  ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              "Действия",
-                              style: TextStyle(
-                                color: AppColors.black10,
-                                fontSize: 18,
-                              ),
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape: ContinuousRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                            Text(' - '),
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: ContinuousRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  elevation: 0,
+                                  backgroundColor: AppColors.white,
+                                  side: BorderSide(
+                                    color: AppColors.lightDark90,
+                                  ),
                                 ),
-                                elevation: 0,
-                              ),
-                              onPressed: () => _showPopupMenu(context),
-                              child: const Text(
-                                'Действия',
-                                style: TextStyle(
-                                  color: AppColors.black10,
+                                onPressed: () async {
+                                  final selectedDate = await onDateSelected();
+                                  if (selectedDate != null) {
+                                    date = selectedDate
+                                        .toIso8601String()
+                                        .substring(0, 10);
+                                    profileProvider
+                                        .setSelectedDateFromLogs(selectedDate);
+                                    _loadLogs();
+                                  }
+                                },
+                                child: Text(
+                                  profileProvider.selectedDateFromLogs
+                                      .toIso8601String()
+                                      .substring(0, 10),
+                                  style: const TextStyle(
+                                    color: AppColors.black10,
+                                    fontSize: 13,
+                                  ),
                                 ),
                               ),
                             ),
@@ -217,13 +233,75 @@ class _ProfileLogsState extends State<ProfileLogs> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 5, bottom: 5),
+                child: Text(
+                  'Действия',
+                  style: TextStyle(
+                    color: AppColors.black10,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: ContinuousRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation: 0,
+                              backgroundColor: AppColors.white,
+                              side: BorderSide(color: AppColors.lightDark90),
+                            ),
+                            onPressed: () => _showPopupMenu(context),
+                            child: const Text(
+                              'Действия',
+                              style: TextStyle(
+                                color: AppColors.black10,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10, left: 5, bottom: 5),
+                child: Text(
+                  'Результаты',
+                  style: TextStyle(
+                    color: AppColors.black10,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
               SingleChildScrollView(
                 child: Column(
                   children: List.generate(
                     _allLogs.length,
                     (value) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      padding: const EdgeInsets.only(bottom: 5),
                       child: SizedBox(
                         width: double.infinity,
                         child: DecoratedBox(
@@ -231,14 +309,13 @@ class _ProfileLogsState extends State<ProfileLogs> {
                             borderRadius: const BorderRadius.all(
                               Radius.circular(10),
                             ),
-                            border: Border.all(
-                              color: AppColors.lightDark85,
-                              width: 1,
-                            ),
+                            color: AppColors.white,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
+                              horizontal: 10,
+                              vertical: 10,
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -247,8 +324,8 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(
-                                      width: 50,
-                                      height: 50,
+                                      width: 40,
+                                      height: 40,
                                       child: DecoratedBox(
                                         decoration: BoxDecoration(
                                           borderRadius: const BorderRadius.all(
@@ -295,12 +372,14 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                     ),
                                     const SizedBox(width: 10),
                                     Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           "${_allLogs[value].employee?.firstName} ${_allLogs[value].employee?.lastName}",
                                           style: const TextStyle(
                                             color: AppColors.black,
-                                            fontSize: 18,
+                                            fontSize: 14,
                                             fontWeight: FontWeight.w400,
                                           ),
                                         ),
@@ -308,7 +387,7 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                           "@${_allLogs[value].employee?.username}",
                                           style: const TextStyle(
                                             color: AppColors.black10,
-                                            fontSize: 16,
+                                            fontSize: 12,
                                           ),
                                         ),
                                       ],
@@ -319,18 +398,19 @@ class _ProfileLogsState extends State<ProfileLogs> {
                                           _allLogs[value].createdAt!),
                                       style: const TextStyle(
                                         color: AppColors.black10,
-                                        fontSize: 16,
+                                        fontSize: 12,
                                       ),
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 10),
+                                const SizedBox(height: 5),
                                 const Text(
                                   "Вошел(-ла) в систему",
                                   style: TextStyle(
-                                      color: AppColors.black,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w300),
+                                    color: AppColors.black,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w300,
+                                  ),
                                 ),
                               ],
                             ),

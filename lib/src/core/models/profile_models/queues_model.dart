@@ -22,4 +22,14 @@ class QueueModel {
       titleRu: json['title_ru'] ?? '',
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'code': code,
+      'title_en': titleEn,
+      'title_kk': titleKk,
+      'title_ru': titleRu,
+    };
+  }
 }
