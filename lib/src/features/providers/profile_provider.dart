@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class ProfileProvider extends ChangeNotifier {
   DateTime selectedDateFromLogs = DateTime.now();
-
+  int schemeSelection = 2;
   String formatUnixTimeToTime(int unixTime) {
     DateTime dateTime =
         DateTime.fromMillisecondsSinceEpoch(unixTime * 1000, isUtc: true);

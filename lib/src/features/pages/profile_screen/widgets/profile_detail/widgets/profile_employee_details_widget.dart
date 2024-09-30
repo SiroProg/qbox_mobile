@@ -1,31 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../../../core/models/profile_models/employee_by_id_model.dart';
 import '../../../../../../core/models/profile_models/position_model.dart';
-import '../../../../../../core/models/profile_models/skill_model.dart';
-import '../../../../../../core/styles/app_colors.dart'; // Import Material for CircularProgressIndicator
+import '../../../../../../core/styles/app_colors.dart';
 
 class ProfileEmployeeDetailsWidget extends StatelessWidget {
-  final List<SkillModel> skills;
   final EmployeeByIdModel employee;
   final PositionModel position;
 
   const ProfileEmployeeDetailsWidget({
     super.key,
     required this.employee,
-    required this.skills,
     required this.position,
   });
-
-  String getSkills() {
-    String result = '';
-    for (SkillModel skill in skills) {
-      result += skill.titleRu;
-      result += ', ';
-    }
-    return result;
-  }
 
   String determineGender(int value) {
     if (value == 0) {
@@ -47,9 +34,9 @@ class ProfileEmployeeDetailsWidget extends StatelessWidget {
           const Text(
             "Данные сотрудника",
             style: TextStyle(
-              color: AppColors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 22,
+              color: AppColors.black10,
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
             ),
           ),
           const SizedBox(height: 10),
@@ -58,9 +45,9 @@ class ProfileEmployeeDetailsWidget extends StatelessWidget {
           const Text(
             "Системные данные",
             style: TextStyle(
-              color: AppColors.black,
-              fontWeight: FontWeight.w600,
-              fontSize: 22,
+              color: AppColors.black10,
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
             ),
           ),
           const SizedBox(height: 10),
@@ -78,10 +65,6 @@ class ProfileEmployeeDetailsWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: AppColors.lightDark85,
-            width: 1,
-          ),
         ),
         child: SingleChildScrollView(
           child: Padding(
@@ -163,10 +146,6 @@ class ProfileEmployeeDetailsWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: AppColors.lightDark85,
-            width: 1,
-          ),
         ),
         child: SingleChildScrollView(
           child: Padding(
@@ -195,13 +174,9 @@ class ProfileEmployeeDetailsWidget extends StatelessWidget {
                 const SizedBox(height: 10),
                 EmployeeDetailItem(
                   title: "Роль в группе",
-                  value: position.titleRu,
+                  value: position.titleRu ?? '',
                 ),
                 const SizedBox(height: 10),
-                EmployeeDetailItem(
-                  title: "Навыки",
-                  value: getSkills(),
-                ),
               ],
             ),
           ),
@@ -230,17 +205,17 @@ class EmployeeDetailItem extends StatelessWidget {
           title,
           style: const TextStyle(
             color: AppColors.black10,
-            fontSize: 18,
+            fontSize: 15,
           ),
         ),
         SizedBox(
-          width: 220, // Adjust width as per your design requirements
+          // Adjust width as per your design requirements
           child: Text(
             value,
             textAlign: TextAlign.end,
             style: const TextStyle(
               color: AppColors.black,
-              fontSize: 18,
+              fontSize: 14,
               fontWeight: FontWeight.w400,
             ),
           ),

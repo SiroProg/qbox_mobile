@@ -17,10 +17,10 @@ class ProfileService {
       maxRedirects: 5,
     );
 
-  Future<List<LogModel>> fetchAuditData(String startDate) async {
+  Future<List<LogModel>> fetchAuditData(String startDate, int id) async {
     try {
       final response = await _dio.get('/api/audit', queryParameters: {
-        'employee_id': DBService.id,
+        'employee_id': id,
         'page': 1,
         'start_date': startDate,
         'stop_date': startDate,
@@ -148,7 +148,6 @@ class ProfileService {
       print(DBService.token);
       if (response.statusCode == 200 && response.data['_success']) {
         final data = response.data['data']['employee'];
-        print(EmployeeByIdModel.fromJson(data).management);
         return EmployeeByIdModel.fromJson(data);
       } else {
         throw Exception('Failed to load employee data');

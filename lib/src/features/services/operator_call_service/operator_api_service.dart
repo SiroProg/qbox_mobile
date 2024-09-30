@@ -3,7 +3,12 @@ import 'package:qbox_mobile/src/core/models/operator_call/static_config/new_mode
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/upload_model.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/fields/card_item_model.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/fields/task_data_model.dart';
+// <<<<<<< HEAD
 import 'package:qbox_mobile/src/core/utils/custom_inteeceptor.dart';
+import 'package:qbox_mobile/src/features/services/db_service/db_service.dart';
+// =======
+import '../../../core/models/operator_call/redirect_models/redirect_model.dart';
+// >>>>>>> 96f85c4d07bffb68f82cf164ddbd41303f846faf
 import '../../../core/models/operator_call/static_config/new_model/static_model.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/fields/fields_model.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/folder_model.dart';
@@ -23,6 +28,27 @@ class OperatorService {
       maxRedirects: 5,
     )
     ..interceptors.add(const CustomInterceptor());
+
+  static Future<RedirectModel> getRedirectDetails(int operatorId) async {
+    try {
+      final response = await _dio.post(
+          '/api/calls/workspace/redirects/operators/check/$operatorId',
+          queryParameters: {
+            'token': DBService.token,
+          });
+
+      if (response.statusCode == 200) {
+        final responseData = response.data['data']['operator'];
+        return RedirectModel.fromJson(responseData);
+      } else {
+        warning('Failed to get operator details');
+        throw Exception('Failed to get operator details');
+      }
+    } catch (e) {
+      fatal('Error getting operator details: $e');
+      throw Exception('Error getting operator details: $e');
+    }
+  }
 
   static Future<UploadModel?> upload({
     required String filePath,

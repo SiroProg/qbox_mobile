@@ -6,6 +6,7 @@ import '../../core/models/control_panel_models/call_team_model.dart';
 import '../../core/models/control_panel_models/missed_calls_model.dart';
 import '../../core/models/control_panel_models/perfomens_model.dart';
 import '../../core/models/control_panel_models/status_model.dart';
+import '../../core/models/control_panel_models/task_model.dart';
 import '../../core/models/control_panel_models/сonversation_model.dart';
 
 class ControlPanelProvider extends ChangeNotifier {
@@ -15,6 +16,7 @@ class ControlPanelProvider extends ChangeNotifier {
   List<CallOperatorModel> callOperators = [];
   CallTeamModel callTeams = CallTeamModel(text: [], audio: [], video: []);
   List<ConversationModel> conversations = [];
+  TaskModel? taskModel;
   List<Call> missedCalls = [];
 
   PerformanceModel? performance;
@@ -48,9 +50,15 @@ class ControlPanelProvider extends ChangeNotifier {
   num getFeedbackAverage() {
     try {
       return conversations
-              .map((conversation) => conversation.feedback.rating)
-              .reduce((a, b) => a + b) /
-          conversations.length;
+                      .map((conversation) => conversation.feedback.rating)
+                      .reduce((a, b) => a + b) /
+                  conversations.length >=
+              0
+          ? conversations
+                  .map((conversation) => conversation.feedback.rating)
+                  .reduce((a, b) => a + b) /
+              conversations.length
+          : 0;
     } catch (e) {
       return 0;
     }
