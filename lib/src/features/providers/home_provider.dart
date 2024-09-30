@@ -72,8 +72,6 @@ class HomeProvider extends ChangeNotifier {
     selectedIndex = index;
     pageController.jumpToPage(index);
     notifyListeners();
-    print(-9090);
-    print(DBService.id);
   }
 
   void onPageChanged(int index) {

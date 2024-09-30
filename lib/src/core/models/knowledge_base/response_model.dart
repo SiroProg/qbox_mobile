@@ -59,7 +59,7 @@ class ResponseModel {
         ),
         authorId: json['author_id'] as int,
         projectId: json['project_id'] as int,
-        oldId: json['oldId'] as int,
+        oldId: json['old_id'] as int,
         tags: List<dynamic>.from(json['tags'] as List),
         categoryTitle: json['category_title'] as String,
       );

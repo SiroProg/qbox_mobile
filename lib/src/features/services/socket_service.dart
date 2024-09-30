@@ -36,7 +36,7 @@ class SocketService {
     socket.on("user_call", (data) {
       info('Socket -> user_call: $data');
 
-      if (data['state'] == 'new') {
+      if (data['state'] == 'new' || data['state'] == 'redirect') {
         chatProvider.onUserCall(data);
       }
     });

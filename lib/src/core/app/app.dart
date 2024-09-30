@@ -1,3 +1,6 @@
+import 'package:qbox_mobile/src/features/providers/knowledge_base_provider.dart';
+import 'package:qbox_mobile/src/features/providers/serach_provider.dart';
+import 'package:qbox_mobile/src/features/providers/task_provider.dart';
 import '../../features/pages/authentication_screen/authentication_page.dart';
 import 'package:qbox_mobile/src/features/providers/employees_provider.dart';
 import 'package:qbox_mobile/src/features/providers/chat_provider.dart';
@@ -24,6 +27,9 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ControlPanelProvider()),
         ChangeNotifierProvider(create: (_) => EmployeesProvider()),
         ChangeNotifierProvider(create: (_) => ChatProvider()),
+        ChangeNotifierProvider(create: (_) => KnowledgeBaseProvider()),
+        ChangeNotifierProvider(create: (_) => SerachProvider()),
+        ChangeNotifierProvider(create: (_) => TaskProvider()),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,

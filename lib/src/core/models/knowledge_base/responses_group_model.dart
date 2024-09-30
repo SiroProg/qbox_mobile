@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:qbox_mobile/src/core/constants/api_constants.dart';
 
 @immutable
 class ResponsesGroupModel {
@@ -31,7 +32,7 @@ class ResponsesGroupModel {
   final String? photo;
   final String? keywords;
   final String? responses;
-  final List<int> counters;
+  final List<dynamic> counters;
   final int datetime;
   final Map<String, Object?> config;
   final int authorId;
@@ -49,11 +50,11 @@ class ResponsesGroupModel {
         id: json['id'] as int,
         title: json['title'] as String,
         lang: json['lang'] as int,
-        parentId: json['parent_Id'] as int,
+        parentId: json['parent_id'] as int,
         photo: json['photo'] as String?,
         keywords: json['keywords'] as String?,
         responses: json['responses'] as String?,
-        counters: List<int>.from((json['counters'] as List<int>)),
+        counters: List<int>.from((json['counters'] as List<dynamic>)),
         datetime: json['datetime'] as int,
         config:
             Map<String, Object?>.from((json['config'] as Map<String, Object?>)),
@@ -61,7 +62,9 @@ class ResponsesGroupModel {
         projectId: json['project_id'] as int,
         status: json['status'] as int,
         oldId: json['old_id'] as int,
-        icon: json['icon'] as String?,
+        icon: json['icon'] == null
+            ? null
+            : '${ApiConstants.baseUrl}${(json['icon'] as String)}',
         responsesCount: json['responses_count'] as int,
         groupsCount: json['groups_count'] as int,
         responsesBranchCount: json['responses_branch_count'] as int,

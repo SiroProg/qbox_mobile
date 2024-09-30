@@ -34,7 +34,9 @@ dependencies:
   flick_video_player: ^0.9.0
 
   badges: ^3.1.2
-  local_auth: ^2.3.0
+  # webview_flutter: ^4.9.0
+  html_viewer_elite: ^0.0.4
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:

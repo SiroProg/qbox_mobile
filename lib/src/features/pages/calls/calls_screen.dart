@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qbox_mobile/src/features/pages/control_panel_screen/control_panel_screen.dart';
 import 'package:qbox_mobile/src/features/pages/employess/employees_screen.dart';
-import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_app_bar.dart';
-import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_bottom_navigation.dart';
 import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_list_tile.dart';
 import 'package:qbox_mobile/src/features/services/db_service/db_service.dart';
 import 'package:qbox_mobile/src/features/services/home_service/home_service.dart';
@@ -71,7 +69,6 @@ class _CallsScreenState extends State<CallsScreen> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: const CustomAppBar(),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
           child: GridView.builder(
@@ -96,6 +93,5 @@ class _CallsScreenState extends State<CallsScreen> {
             },
           ),
         ),
-        bottomNavigationBar: const CustomBottomNavigation(),
       );
 }

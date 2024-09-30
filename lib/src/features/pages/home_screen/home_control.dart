@@ -38,6 +38,8 @@
 import 'package:flutter/material.dart';
 import 'package:qbox_mobile/src/core/models/auth_models/employee_model.dart';
 import 'package:provider/provider.dart';
+import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_app_bar.dart';
+import 'package:qbox_mobile/src/features/pages/home_screen/widget/custom_bottom_navigation.dart';
 import 'package:qbox_mobile/src/features/providers/home_provider.dart';
 import 'package:qbox_mobile/src/features/services/db_service/db_service.dart';
 import 'package:qbox_mobile/src/features/services/home_service/home_service.dart';
@@ -73,13 +75,17 @@ class _HomeControlState extends State<HomeControl> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: Consumer<HomeProvider>(
-          builder: (context, provider, child) => PageView(
-            physics: const NeverScrollableScrollPhysics(),
-            controller: provider.pageController,
-            onPageChanged: provider.onPageChanged,
-            children: provider.pages,
+        body: Scaffold(
+          appBar: const CustomAppBar(),
+          body: Consumer<HomeProvider>(
+            builder: (context, provider, child) => PageView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: provider.pageController,
+              onPageChanged: provider.onPageChanged,
+              children: provider.pages,
+            ),
           ),
+          bottomNavigationBar: const CustomBottomNavigation(),
         ),
       );
 }

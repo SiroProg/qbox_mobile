@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:qbox_mobile/src/core/styles/app_colors.dart';
 import 'package:qbox_mobile/src/features/pages/employess/widget/custom_button.dart';
 import 'package:qbox_mobile/src/features/pages/employess/widget/role_widget.dart';
 import 'package:qbox_mobile/src/features/providers/employees_provider.dart';
@@ -46,6 +47,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 title: provider.sellectedRoles,
                 onTap: () {
                   showModalBottomSheet(
+                    backgroundColor: AppColors.white,
                     context: context,
                     builder: (context) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -95,6 +97,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 title: provider.sellectedGroup,
                 onTap: () {
                   showModalBottomSheet(
+                    backgroundColor: AppColors.white,
                     context: context,
                     builder: (context) => Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),

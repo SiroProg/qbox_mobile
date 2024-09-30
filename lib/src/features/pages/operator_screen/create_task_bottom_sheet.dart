@@ -30,7 +30,7 @@ class CreateTaskBottomSheet extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(
+                    MaterialPageRoute(
                       builder: (context) => CreateTaskScreen(
                         title: provider.folders[5].forms[0].title,
                         fieldId: provider.folders[5].forms[0].id,
@@ -49,7 +49,7 @@ class CreateTaskBottomSheet extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    CupertinoPageRoute(
+                    MaterialPageRoute(
                       builder: (context) => CreateTaskScreen(
                         title: provider.folders[6].forms[0].title,
                         fieldId: provider.folders[6].forms[0].id,

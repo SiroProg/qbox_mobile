@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:qbox_mobile/src/core/constants/api_constants.dart';
 
 @immutable
 class ProjectModel {
@@ -30,7 +31,9 @@ class ProjectModel {
         status: json['status'] as int,
         configs: Map<String, Object?>.from(
             (json['configs'] as Map<String, Object?>)),
-        icon: json['icon'] as String?,
+        icon: json['icon'] == null
+            ? null
+            : "${ApiConstants.baseUrl}${(json['icon'] as String)}",
         groupsCount: json['groups_count'] as int,
         groupsBranchCount: json['groups_branch_count'] as int,
         responsesCount: json['responses_count'] as int,

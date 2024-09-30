@@ -231,7 +231,14 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                           showCupertinoDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return const SuccessDialog();
+                              return SuccessDialog(
+                                message: 'Your task was successfully created.',
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
+                                },
+                              );
                             },
                           );
                         }

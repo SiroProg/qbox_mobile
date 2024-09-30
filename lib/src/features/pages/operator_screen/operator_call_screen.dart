@@ -28,7 +28,7 @@ class _OperatorCallScreenState extends State<OperatorCallScreen> {
   }
 
   void delayFunction() async {
-    await Future.delayed(const Duration(seconds: 2), () {
+    await Future.delayed(const Duration(seconds: 3), () {
       setState(() {});
     });
   }

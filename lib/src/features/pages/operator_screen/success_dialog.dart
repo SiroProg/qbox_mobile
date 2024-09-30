@@ -2,7 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SuccessDialog extends StatelessWidget {
-  const SuccessDialog({super.key});
+  const SuccessDialog({
+    required this.message,
+    required this.onTap,
+    super.key,
+  });
+
+  final String message;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -21,17 +28,13 @@ class SuccessDialog extends StatelessWidget {
           ),
         ],
       ),
-      content: const Text(
-        'Your task was successfully created.',
-        style: TextStyle(fontSize: 16),
+      content: Text(
+        message,
+        style: const TextStyle(fontSize: 16),
       ),
       actions: <Widget>[
         CupertinoDialogAction(
-          onPressed: () {
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
-            Navigator.of(context).pop();
-          },
+          onPressed: onTap,
           child: const Text('OK'),
         ),
       ],

@@ -3,9 +3,9 @@ import 'package:qbox_mobile/src/core/models/operator_call/static_config/new_mode
 import 'package:qbox_mobile/src/core/models/operator_call/operator_models/upload_model.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/fields/card_item_model.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/fields/task_data_model.dart';
+import 'package:qbox_mobile/src/core/utils/custom_inteeceptor.dart';
 import '../../../core/models/operator_call/static_config/new_model/static_model.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/fields/fields_model.dart';
-import 'package:qbox_mobile/src/features/services/db_service/db_service.dart';
 import 'package:qbox_mobile/src/core/models/operator_call/folder_model.dart';
 import 'package:qbox_mobile/src/core/utils/logger.dart';
 import '../../../core/constants/api_constants.dart';
@@ -22,25 +22,7 @@ class OperatorService {
       followRedirects: true,
       maxRedirects: 5,
     )
-    ..interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) {
-        options.headers.addAll({
-          "X-Api-Token": DBService.token,
-        });
-
-        info('Request to ${options.uri} with headers ${options.headers}');
-        return handler.next(options);
-      },
-      onResponse: (response, handler) {
-        info('Response: ${response.data}');
-        return handler.next(response);
-      },
-      onError: (DioException error, handler) {
-        fatal(
-            'Error occurred: ${error.response?.statusCode} ${error.response?.statusMessage}');
-        return handler.next(error);
-      },
-    ));
+    ..interceptors.add(const CustomInterceptor());
 
   static Future<UploadModel?> upload({
     required String filePath,

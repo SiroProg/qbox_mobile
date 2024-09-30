@@ -14,25 +14,35 @@ class EmployesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-        radius: 30,
-        backgroundColor: AppColors.grey.withOpacity(0.2),
-        child: Text(
-          '${employees.firstName[0].toUpperCase()} ${employees.lastName[0].toUpperCase()}',
-          style: const TextStyle(fontSize: 20),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Card(
+        color: AppColors.white,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12),
+          ),
+        ),
+        child: ListTile(
+          leading: CircleAvatar(
+            radius: 30,
+            backgroundColor: AppColors.grey.withOpacity(0.2),
+            child: Text(
+              '${employees.firstName[0].toUpperCase()} ${employees.lastName[0].toUpperCase()}',
+              style: const TextStyle(fontSize: 20),
+            ),
+          ),
+          title: Text(employees.displayName),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('@${employees.username}'),
+              Text(employees.role.title),
+            ],
+          ),
+          onTap: onTap,
         ),
       ),
-      title: Text(employees.displayName),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('@${employees.username}'),
-          Text(employees.role.title),
-        ],
-      ),
-      trailing: const Icon(Icons.arrow_forward_ios_rounded),
-      onTap: onTap,
     );
   }
 }
